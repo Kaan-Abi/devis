@@ -1,0 +1,99 @@
+services:
+    nginx_reverse_proxy:
+        container_name: devis-nginx-reverse-proxy
+        build:
+            context: .
+            dockerfile: docker/nginx/nginx.Dockerfile
+            target: rp_dev
+        volumes:
+            - ./docker/nginx/ssl:/etc/nginx/ssl:ro
+        environment:
+            - PHP_HOST=${PHP_HOST:-php_server}
+        depends_on:
+            - php_server
+        networks:
+            - devis
+        ports:
+            - "8000:80"
+            - "4443:443"
+    php_server:
+        container_name: devis-php_server
+        build:
+            context: .
+            dockerfile: docker/php/server/php_server.Dockerfile
+            target: dev
+        restart: unless-stopped
+        depends_on:
+            - database
+        environment:
+            DATABASE_HOST: ${DATABASE_HOST:-database}
+            SERVER_NAME: ${SERVER_NAME:-http://devis:80}
+        networks:
+            - devis
+        volumes:
+            - .:/app
+            - /app/.git
+            - caddy_data:/data
+            - caddy_config:/config
+        extra_hosts:
+            host.docker.internal: host-gateway
+    node:
+        container_name: devis-node
+        image: node:20.16.0-alpine
+        volumes:
+            - ./:/srv/app
+            - /srv/app/node_modules
+        networks:
+            - devis
+        working_dir: /srv/app
+        command: sh -c "npm i && npm run devwatch"
+
+    database:
+        container_name: devis-db
+        image: postgres:16.4-alpine
+        environment:
+            POSTGRES_DB: devis
+            POSTGRES_PASSWORD: devis
+            POSTGRES_USER: devis
+        ports:
+            - "54323:5432"
+        networks:
+            - devis
+
+    maildev:
+        image: maildev/maildev
+        container_name: maildev_devis
+        command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
+        ports:
+            - "1180:80"
+            - "1125:25"
+        restart: always
+        networks:
+            - devis
+
+###> doctrine/doctrine-bundle ###
+  database:
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    volumes:
+      - database_data:/var/lib/postgresql/data:rw
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+###< doctrine/doctrine-bundle ###
+
+networks:
+    devis:
+        external: true
+
+volumes:
+    database_data:
+    caddy_data:
+    caddy_config:
+
+###> doctrine/doctrine-bundle ###
+  database_data:
+###< doctrine/doctrine-bundle ###
