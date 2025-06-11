@@ -27,7 +27,7 @@ services:
             - database
         environment:
             DATABASE_HOST: ${DATABASE_HOST:-database}
-            SERVER_NAME: ${SERVER_NAME:-http://devis:80}
+            SERVER_NAME: ${SERVER_NAME:-http://devis:8000}
         networks:
             - devis
         volumes:
