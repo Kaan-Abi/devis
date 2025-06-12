@@ -7,6 +7,8 @@
 /public/bundles/
 /var/
 /vendor/
+/.idea/
+/startbootstrap-sb-admin-2-gh-pages/
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
