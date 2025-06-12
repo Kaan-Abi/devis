@@ -9,8 +9,9 @@
         {{ "client.index.create_new"|trans({}, 'interface') }}
     </a>
 
-    <table class="table">
-        <thead>
+    <div class="bg-white shadow border-1 p-3">
+        <table class="table dataTable">
+            <thead>
             <tr>
                 <th>{{ "client.index.table.header.name"|trans({}, 'interface') }}</th>
                 <th>{{ "client.index.table.header.phone"|trans({}, 'interface') }}</th>
@@ -18,28 +19,30 @@
                 <th>{{ "client.index.table.header.address"|trans({}, 'interface') }}</th>
                 <th>{{ "client.index.table.header.actions"|trans({}, 'interface') }}</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for client in clients %}
-            <tr>
-                <td>{{ client.name }}</td>
-                <td>{{ client.phone }}</td>
-                <td>{{ client.email }}</td>
-                <td>{{ client.address }}</td>
-                <td>
-                    <a class="btn btn-warning" href="{{ path('app_client_edit', {'id': client.id}) }}">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">
-                    {{ "table.no_results"|trans({}, 'interface') }}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for client in clients %}
+                <tr>
+                    <td>{{ client.name }}</td>
+                    <td>{{ client.phone }}</td>
+                    <td>{{ client.email }}</td>
+                    <td>{{ client.address }}</td>
+                    <td>
+                        <a class="btn btn-warning" href="{{ path('app_client_edit', {'id': client.id}) }}">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">
+                        {{ "table.no_results"|trans({}, 'interface') }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 
 {% endblock %}

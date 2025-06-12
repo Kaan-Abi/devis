@@ -22,7 +22,7 @@ final class Menu
             new MenuItem(
                 title: 'Clients',
                 routeName: 'app_client_index',
-                active: $this->urlIsFromCurrentSubpath('app_accueil'),
+                active: $this->urlIsFromCurrentSubpath('app_client_index'),
                 icon: 'fa-solid fa-users-between-lines'
             ),
         ];
@@ -33,8 +33,8 @@ final class Menu
         $routePath = trim($this->router->generate($routeName),'/');
         $currentPath = trim($this->requestStack->getCurrentRequest()?->getPathInfo(),'/');
 
-        $routeFirstSegment = explode('/',$routePath)[0];
-        $currentPathFirstSegment = explode('/',$currentPath)[0];
+        $routeFirstSegment = explode('/',$routePath)[1];
+        $currentPathFirstSegment = explode('/',$currentPath)[1];
 
         return $routeFirstSegment === $currentPathFirstSegment;
     }

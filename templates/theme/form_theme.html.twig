@@ -1,0 +1,10 @@
+{% extends 'bootstrap_5_layout.html.twig' %}
+{%- block form_label_content -%}
+    {% set label = name %}
+
+    {%- if label_html is same as(false) -%}
+        {{- label|trans(label_translation_parameters, 'form_labels') -}}
+    {%- else -%}
+        {{- label|trans(label_translation_parameters, 'form_labels')|raw -}}
+    {%- endif -%}
+{%- endblock form_label_content -%}
