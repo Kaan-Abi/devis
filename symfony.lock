@@ -253,6 +253,18 @@
             "ref": "9dd2778a116b6e5e01e5e1582d03d5a9e82630de"
         }
     },
+    "symfony/ux-twig-component": {
+        "version": "2.26",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.13",
+            "ref": "9b627037a510e20eddb559e06050a34854ce51d6"
+        },
+        "files": [
+            "config/packages/twig_component.yaml"
+        ]
+    },
     "symfony/validator": {
         "version": "6.4",
         "recipe": {
@@ -301,9 +313,6 @@
         "files": [
             "config/packages/reset_password.yaml"
         ]
-    },
-    "symfonycasts/sass-bundle": {
-        "version": "v0.8.2"
     },
     "symfonycasts/verify-email-bundle": {
         "version": "v1.17.3"

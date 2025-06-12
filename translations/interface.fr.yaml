@@ -1,0 +1,5 @@
+app_name: 'Devis Facile'
+navbar:
+    profile: Profile
+    settings: Settings
+    logout: Se déconnecter
