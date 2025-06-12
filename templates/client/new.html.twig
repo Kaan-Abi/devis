@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "client.new.title"|trans({}, 'interface') }}{% endblock %}
+{% block tab_title %}{{ "client.new.title"|trans({}, 'interface') }}{% endblock %}
+
+{% block body %}
+    <div class="card bg-white shadow border-1 p-3">
+        {{ include('client/_form.html.twig') }}
+    </div>
+
+    <a class="btn btn-link float-end" href="{{ path('app_client_index') }}">
+        <i class="fas fa-arrow-left"></i>
+        {{ "client.new.back_to_list"|trans({}, 'interface') }}
+    </a>
+{% endblock %}

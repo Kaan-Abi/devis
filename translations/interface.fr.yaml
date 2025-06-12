@@ -3,3 +3,26 @@ navbar:
     profile: Profile
     settings: Settings
     logout: Se déconnecter
+
+table:
+    no_results: Aucun résultat trouvé
+
+save: Enregistrer
+delete: Supprimer
+client:
+    index:
+        title: Liste des clients
+        table:
+            header:
+                name: Nom
+                phone: Portable
+                email: Email
+                address: Adresse
+                actions: Actions
+        create_new: Ajouter un client
+    new:
+        title: Création d'un nouveau client
+        back_to_list: Retour à la liste des clients
+    edit:
+        title: Modification de %client_name%
+        back_to_list: Retour à la liste des clients

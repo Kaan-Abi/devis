@@ -21,7 +21,7 @@ final class Menu
         return [
             new MenuItem(
                 title: 'Clients',
-                routeName: 'app_accueil',
+                routeName: 'app_client_index',
                 active: $this->urlIsFromCurrentSubpath('app_accueil'),
                 icon: 'fa-solid fa-users-between-lines'
             ),
