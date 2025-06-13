@@ -1,0 +1,7 @@
+.devisLine > div {
+    width: 8%;
+}
+
+.devisLine > div:first-child {
+    min-width: 60% !important;
+}

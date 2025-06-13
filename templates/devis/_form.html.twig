@@ -1,4 +1,29 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+
+    <div class="row justify-content-start gap-3">
+        <div class="col-md-6"></div>
+    </div>
+    <div class="row justify-content-end gap-3">
+        <div class="col-md-6 shadow p-2 rounded-3">
+            {{ form_widget(form.client) }}
+        </div>
+    </div>
+
+    <div class="card p-3 rounded-3 my-3">
+        <legend> {{form_label(form.content)}} </legend>
+
+        <div class="col">
+            <div>
+                {{ form_widget(form.content) }}
+            </div>
+        </div>
+        <div class="col-md-12">
+            <button type="button" id="addContent" class="btn btn-primary"> <i class="fas fa-plus"></i> </button>
+        </div>
+
+    </div>
+
+{{ form_rest(form) }}
+
     <button class="btn btn-primary">{{ button_label|default("save"|trans({}, 'interface')) }}</button>
 {{ form_end(form) }}

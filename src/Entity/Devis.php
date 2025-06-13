@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DevisRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Devis
 {
     #[ORM\Id]
@@ -39,6 +40,12 @@ class Devis
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
 
+    #[ORM\Column]
+    private ?float $totalPriceHT = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $vat = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -49,9 +56,10 @@ class Devis
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    #[ORM\PrePersist]
+    public function setCreatedAt(): static
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -61,6 +69,7 @@ class Devis
         return $this->updatedAt;
     }
 
+    #[ORM\PreUpdate]
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
@@ -136,6 +145,30 @@ class Devis
     public function setAuthor(?User $author): static
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getTotalPriceHT(): ?float
+    {
+        return $this->totalPriceHT;
+    }
+
+    public function setTotalPriceHT(float $totalPriceHT): static
+    {
+        $this->totalPriceHT = $totalPriceHT;
+
+        return $this;
+    }
+
+    public function getVat(): ?float
+    {
+        return $this->vat;
+    }
+
+    public function setVat(?float $vat): static
+    {
+        $this->vat = $vat;
 
         return $this;
     }
