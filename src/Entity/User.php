@@ -54,6 +54,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Devis::class, mappedBy: 'author', orphanRemoval: true)]
     private Collection $devis;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $siret = null;
+
     public function __construct()
     {
         $this->devis = new ArrayCollection();
@@ -206,6 +209,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $devi->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSiret(): ?string
+    {
+        return $this->siret;
+    }
+
+    public function setSiret(?string $siret): static
+    {
+        $this->siret = $siret;
 
         return $this;
     }

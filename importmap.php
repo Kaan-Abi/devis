@@ -46,4 +46,7 @@ return [
         'version' => '6.7.2',
         'type' => 'css',
     ],
+    'tinymce' => [
+        'version' => '7.9.1',
+    ],
 ];

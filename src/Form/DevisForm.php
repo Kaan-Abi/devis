@@ -15,7 +15,7 @@ class DevisForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-//            ->add('user', Use)
+            ->add('author', UserForm::class)
             ->add('client', ClientForm::class)
             ->add('content', CollectionType::class, [
                 'entry_type' => DevisLineForm::class,

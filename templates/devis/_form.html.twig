@@ -1,11 +1,24 @@
 {{ form_start(form) }}
-
-    <div class="row justify-content-start gap-3">
-        <div class="col-md-6"></div>
-    </div>
-    <div class="row justify-content-end gap-3">
-        <div class="col-md-6 shadow p-2 rounded-3">
-            {{ form_widget(form.client) }}
+    <div class="row justify-content-between">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    {{ "devis.form.author"|trans({}, 'interface') }}
+                </div>
+                <div class="card-body">
+                    {{ form_widget(form.author) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    {{ "devis.form.client"|trans({}, 'interface') }}
+                </div>
+                <div class="card-body">
+                    {{ form_widget(form.client) }}
+                </div>
+            </div>
         </div>
     </div>
 
@@ -23,19 +36,21 @@
 
     </div>
 
-{{ form_row(form.additionalNote) }}
+    <div class="card p-3 rounded-3">
+        {{ form_row(form.additionalNote) }}
 
-<div class="row justify-content-center gap-2">
-    <div class="col-md-3">
-        {{ form_row(form.totalPriceHT) }}
+        <div class="row justify-content-center gap-2">
+            <div class="col-md-3">
+                {{ form_row(form.totalPriceHT) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_row(form.vat) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_row(form.totalPrice) }}
+            </div>
+        </div>
     </div>
-    <div class="col-md-3">
-        {{ form_row(form.vat) }}
-    </div>
-    <div class="col-md-3">
-        {{ form_row(form.totalPrice) }}
-    </div>
-</div>
 
-    <button class="btn btn-primary">{{ button_label|default("save"|trans({}, 'interface')) }}</button>
+    <button class="btn btn-primary btn-lg mt-5">{{ button_label|default("save"|trans({}, 'interface')) }}</button>
 {{ form_end(form) }}

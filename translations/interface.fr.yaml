@@ -47,6 +47,9 @@ devis:
                 totalPrice: Prix total
                 actions: Actions
         create_new: Ajouter un devis
+    form:
+        client: Client
+        author: Auteur
     new:
         title: Création d'un nouveau devis
         back_to_list: Retour à la liste des devis
