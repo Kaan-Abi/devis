@@ -4,7 +4,7 @@ set -e
 # Get environment variables to show up in SSH session
 eval "$(printenv | sed -n "s/^\([^=]\+\)=\(.*\)$/export \1=\2/p" | sed 's/"/\\\"/g' | sed '/=/s//="/' | sed 's/$/"/' >> /etc/profile)"
 
-#composer install
+composer install
 #
 #echo "Waiting for db to be ready..."
 #
@@ -27,16 +27,15 @@ eval "$(printenv | sed -n "s/^\([^=]\+\)=\(.*\)$/export \1=\2/p" | sed 's/"/\\\"
 #else
 #  echo "The database is now ready and reachable"
 #fi
-#mkdir -p var/log
-#mkdir -p var/cache
-#setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
-#setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
-#mkdir -p public/api
-#setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX public
-#setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX public
-#mkdir -p /var/lib/php
-#setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX /var/lib/php/
-#setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX /var/lib/php/
-#
+mkdir -p var/log
+mkdir -p var/cache
+setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
+setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
+mkdir -p public/api
+setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX public
+setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX public
+mkdir -p /var/lib/php
+setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX /var/lib/php/
+setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX /var/lib/php/
 
 exec docker-php-entrypoint "$@"

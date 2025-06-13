@@ -6,6 +6,7 @@ use App\Entity\Devis;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -37,6 +38,7 @@ class DevisForm extends AbstractType
             ->add('totalPriceHT', MoneyType::class, [
                 'currency' => 'EUR' //TODO: plus tard gérer l'internationalisation
             ])
+            ->add('vat', PercentType::class)
             ->add('totalPrice', MoneyType::class, [
                 'currency' => 'EUR' //TODO: plus tard gérer l'internationalisation
             ])
