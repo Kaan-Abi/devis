@@ -20,10 +20,16 @@ final class Menu
     {
         return [
             new MenuItem(
-                title: 'Clients',
+                title: 'sidebar.clients',
                 routeName: 'app_client_index',
                 active: $this->urlIsFromCurrentSubpath('app_client_index'),
                 icon: 'fa-solid fa-users-between-lines'
+            ),
+            new MenuItem(
+                title: 'sidebar.devis',
+                routeName: 'app_devis_index',
+                active: $this->urlIsFromCurrentSubpath('app_devis_index'),
+                icon: 'fa-solid fa-file-invoice'
             ),
         ];
     }
@@ -33,9 +39,11 @@ final class Menu
         $routePath = trim($this->router->generate($routeName),'/');
         $currentPath = trim($this->requestStack->getCurrentRequest()?->getPathInfo(),'/');
 
-        $routeFirstSegment = explode('/',$routePath)[1];
-        $currentPathFirstSegment = explode('/',$currentPath)[1];
-
-        return $routeFirstSegment === $currentPathFirstSegment;
+        if (isset(explode('/',$currentPath)[1])) {
+            $routeFirstSegment = explode('/',$routePath)[1];
+            $currentPathFirstSegment = explode('/',$currentPath)[1];
+            return $routeFirstSegment === $currentPathFirstSegment;
+        }
+        return false;
     }
 }

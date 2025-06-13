@@ -16,7 +16,7 @@
             <li class="nav-item {{ item.active ? 'active' : ''}}">
                 <a class="nav-link" href="{{ path(item.routeName, item.routeParams) }}">
                     <i {% if item.icon %} class="{{ item.icon }}" {% endif %}></i>
-                    <span>{{ item.title }}</span>
+                    <span>{{ item.title|trans({}, 'interface') }}</span>
                 </a>
             </li>
         {% endfor %}

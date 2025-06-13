@@ -1,4 +1,9 @@
 app_name: 'Devis Facile'
+
+sidebar:
+    clients: Clients
+    devis: Devis
+
 navbar:
     profile: Profile
     settings: Settings
@@ -9,12 +14,17 @@ table:
 
 save: Enregistrer
 delete: Supprimer
+
+form:
+    confirm: Etes-vous sûrs de vouloir supprimer cet élément ?
+
 client:
     index:
         title: Liste des clients
         table:
             header:
                 name: Nom
+                siret: Siret
                 phone: Portable
                 email: Email
                 address: Adresse
@@ -26,3 +36,20 @@ client:
     edit:
         title: Modification de %client_name%
         back_to_list: Retour à la liste des clients
+devis:
+    index:
+        title: Liste des devis
+        table:
+            header:
+                reference: Référence
+                client: Client
+                createdAt: Crée à
+                totalPrice: Prix total
+                actions: Actions
+        create_new: Ajouter un devis
+    new:
+        title: Création d'un nouveau devis
+        back_to_list: Retour à la liste des devis
+    edit:
+        title: Modification de %devis_reference%
+        back_to_list: Retour à la liste des devis

@@ -2,28 +2,33 @@
 
 namespace App\Form;
 
-use App\Entity\Client;
+use App\Entity\Devis;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ClientForm extends AbstractType
+class DevisForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('siret')
-            ->add('phone')
-            ->add('email')
-            ->add('address')
+            ->add('createdAt', null, [
+                'widget' => 'single_text',
+            ])
+            ->add('updatedAt', null, [
+                'widget' => 'single_text',
+            ])
+            ->add('totalPrice')
+            ->add('additionalNote')
+            ->add('content')
+            ->add('reference')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Client::class,
+            'data_class' => Devis::class,
         ]);
     }
 }

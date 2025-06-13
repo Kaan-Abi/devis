@@ -4,7 +4,7 @@
 {% block tab_title %}{{ "client.edit.title"|trans({'%client_name%': client.name}, 'interface') }}{% endblock %}
 
 {% block body %}
-{{ include('client/_delete_form.html.twig') }}
+    {{ include('client/_delete_form.html.twig') }}
     <div class="card bg-white shadow border-1 p-3">
         {{ include('client/_form.html.twig') }}
     </div>
