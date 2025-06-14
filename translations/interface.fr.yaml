@@ -44,7 +44,7 @@ devis:
                 reference: Référence
                 client: Client
                 createdAt: Crée à
-                totalPrice: Prix total
+                totalTTC: Prix total
                 actions: Actions
         create_new: Ajouter un devis
     form:

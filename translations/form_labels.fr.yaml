@@ -9,10 +9,8 @@ siret: Siret
 content: Contenu
 description: Description
 quantity: Quantité
-totalHT: Total HT
-totalTTC: Total TTC
 client: Client
 additionalNote: Notes additionnelles
-totalPriceHT: Prix HT
-totalPrice: Prix total
+totalHT: Prix HT
+totalTTC: Prix TTC
 vat: TVA

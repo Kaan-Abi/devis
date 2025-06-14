@@ -45,7 +45,7 @@ services:
         networks:
             - devis
         working_dir: /srv/app
-        command: sh -c "npm i && npm run devwatch"
+        command: sh -c "npm i && npm run watch"
 
     database:
         container_name: devis-db

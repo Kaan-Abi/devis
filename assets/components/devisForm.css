@@ -1,7 +1,16 @@
-.devisLine > div {
-    width: 8%;
+.devisLine {
+    display: grid;
+    grid-gap: 1%;
+    align-items: end;
 }
-
-.devisLine > div:first-child {
-    min-width: 60% !important;
+/* 📱 Mobile : tous les éléments prennent toute la largeur */
+@media screen and (max-width: 576px) {
+    .devisLine {
+        grid-template-columns: 100%;
+    }
+}
+@media screen and (min-width: 577px) {
+    .devisLine {
+        grid-template-columns: 50% 10% 10% 10% 10% 5%;
+    }
 }

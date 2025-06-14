@@ -1,5 +1,4 @@
-import jquery from './vendor/jquery/jquery.index.js';
-const $ = jquery;
+import $ from 'jquery';
 window.$ = window.jQuery = $;
 
 (function($) {

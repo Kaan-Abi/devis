@@ -14,7 +14,12 @@
     </a>
 {% endblock %}
 
-{% block importmap %}
+{% block javascripts %}
     {{ parent() }}
-    {{ importmap('devisForm') }}
+    {{ encore_entry_script_tags('devisForm') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('devisForm') }}
 {% endblock %}

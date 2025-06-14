@@ -8,3 +8,9 @@
         {{- label|trans(label_translation_parameters, 'form_labels')|raw -}}
     {%- endif -%}
 {%- endblock form_label_content -%}
+
+{% block _devis_form_content_price_row %}
+    {{ form_row(form.totalHT, {'attr': {'class': 'form-control js-total-ht'}}) }}
+    {{ form_row(form.vat, {'attr': {'class': 'form-control js-vat'}}) }}
+    {{ form_row(form.totalTTC, {'attr': {'class': 'form-control js-total-ttc'}}) }}
+{% endblock %}

@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="col-md-12">
-            <button type="button" id="addContent" class="btn btn-primary"> <i class="fas fa-plus"></i> </button>
+            <button type="button" id="addContent" class="btn btn-primary w-100"> <i class="fas fa-plus"></i> </button>
         </div>
 
     </div>
@@ -41,13 +41,10 @@
 
         <div class="row justify-content-center gap-2">
             <div class="col-md-3">
-                {{ form_row(form.totalPriceHT) }}
+                {{ form_row(form.totalHT) }}
             </div>
             <div class="col-md-3">
-                {{ form_row(form.vat) }}
-            </div>
-            <div class="col-md-3">
-                {{ form_row(form.totalPrice) }}
+                {{ form_row(form.totalTTC) }}
             </div>
         </div>
     </div>

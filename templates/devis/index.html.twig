@@ -15,7 +15,7 @@
                 <th>{{ "devis.index.table.header.reference"|trans({}, 'interface') }}</th>
                 <th>{{ "devis.index.table.header.client"|trans({}, 'interface') }}</th>
                 <th>{{ "devis.index.table.header.createdAt"|trans({}, 'interface') }}</th>
-                <th>{{ "devis.index.table.header.totalPrice"|trans({}, 'interface') }}</th>
+                <th>{{ "devis.index.table.header.totalTTC"|trans({}, 'interface') }}</th>
                 <th>{{ "devis.index.table.header.actions"|trans({}, 'interface') }}</th>
             </tr>
             </thead>
@@ -25,7 +25,7 @@
                     <td>{{ devi.reference }}</td>
                     <td>{{ devi.client.name }}</td>
                     <td>{{ devi.createdAt ? devi.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ devi.totalPrice }}</td>
+                    <td>{{ devi.totalTTC }}</td>
                     <td>
                         <a class="btn btn-warning" href="{{ path('app_devis_edit', {'id': devis.id}) }}">
                             <i class="fas fa-edit"></i>

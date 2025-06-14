@@ -1,11 +1,22 @@
 class CollectionTypeHandler
 {
-    static requiredOptions = ['elementsId', 'elementsClass', 'nbParentElement', 'addButton', 'deleteButton'];
 
-    constructor(options = {})
+    constructor(
+        collectionTypeId,
+        elementsClass,
+        addButton,
+        deleteButton,
+        deleteButtonHTML,
+        nbParentElement
+    )
     {
         this.nbElements = 0;
-        this.options = options;
+        this.collectionTypeId = collectionTypeId
+        this.elementsClass = elementsClass
+        this.addButton = addButton
+        this.deleteButton = deleteButton
+        this.deleteButtonHTML = deleteButtonHTML
+        this.nbParentElement = nbParentElement
         this.initListeners();
         this.initElements();
     }
@@ -19,7 +30,7 @@ class CollectionTypeHandler
      * @throws Error
      */
     initListeners(){
-        $(this.options.addButton).on('click', () => this.addElement());
+        $(this.addButton).on('click', () => this.addElement());
     }
 
     /**
@@ -30,19 +41,8 @@ class CollectionTypeHandler
      * @throws Error
      */
     initElements(){
-        this.nbElements = $(this.options.elementsClass).length;
-        $(this.options.elementsClass).each((index, element) => {
-            $(element).append(`
-                <div class="mb-3">
-                    <button type="button" class="w-auto btn btn-danger ${this.options.deleteButton.replace('.', '')}">
-                        <i class="fas fa-times"></i>
-                    </button>    
-                </div>
-                
-            `)
-
-            $(this.options.deleteButton).on('click', (event) => this.deleteElement(event));
-        });
+        this.nbElements = $(this.elementsClass).length;
+        $(this.elementsClass).each((index, element) => this.addDeleteButtonToElement(element));
     }
 
     /**
@@ -53,34 +53,46 @@ class CollectionTypeHandler
      * @throws Error
      */
     addElement(){
-        let dataPrototype = $(this.options.elementsId).attr('data-prototype');
+        let dataPrototype = $(this.collectionTypeId).attr('data-prototype');
         dataPrototype = dataPrototype.replace(/__name__/g, this.nbElements);
         dataPrototype = dataPrototype.replace(/__name__label__/g,'');
 
-        $( this.options.elementsId).append(dataPrototype);
+        $( this.collectionTypeId).append(dataPrototype);
 
-        $( this.options.elementsId + '_' + this.nbElements).append(`
-            <div class="mb-3">
-                <button type="button" class="w-auto btn btn-danger ${this.options.deleteButton.replace('.', '')}">
-                    <i class="fas fa-times"></i>
-                </button>    
-            </div>
-        `)
+        const newElementId = this.collectionTypeId + '_' + this.nbElements
 
-        $(this.options.deleteButton).on('click', (event) => this.deleteElement(event));
+        this.addDeleteButtonToElement(newElementId)
         this.nbElements++;
+
+        document.dispatchEvent(new CustomEvent('collection-type-element-added', {
+            detail: {
+                collectionTypeId: this.collectionTypeId,
+                addedElement: document.querySelector(newElementId)
+            }
+        }));
     }
 
     /**
      * Fonction qui permet de supprimer un élément
      * @returns void
      * @memberof CollectionTypeHandler
-     * @param void
      * @throws Error
+     * @param event
      */
     deleteElement(event){
-        let element = $(event.target).closest(this.options.elementsClass+'RootParent');
+        let element = $(event.target).closest(this.elementsClass+'RootParent');
+        document.dispatchEvent(new CustomEvent('collection-type-element-removed', {
+            detail: {
+                collectionTypeId: this.collectionTypeId,
+                deletedElement: element[0]
+            }
+        }));
         element.remove();
+    }
+
+    addDeleteButtonToElement(element) {
+        $(element).append(this.deleteButtonHTML)
+        $(this.deleteButton).on('click', (event) => this.deleteElement(event));
     }
 }
 

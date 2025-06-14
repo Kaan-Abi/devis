@@ -50,7 +50,7 @@ final class DevisControllerTest extends WebTestCase
         $this->client->submitForm('Save', [
             'devi[createdAt]' => 'Testing',
             'devi[updatedAt]' => 'Testing',
-            'devi[totalPrice]' => 'Testing',
+            'devi[totalTTC]' => 'Testing',
             'devi[additionalNote]' => 'Testing',
             'devi[content]' => 'Testing',
             'devi[reference]' => 'Testing',
@@ -102,7 +102,7 @@ final class DevisControllerTest extends WebTestCase
         $this->client->submitForm('Update', [
             'devi[createdAt]' => 'Something New',
             'devi[updatedAt]' => 'Something New',
-            'devi[totalPrice]' => 'Something New',
+            'devi[totalTTC]' => 'Something New',
             'devi[additionalNote]' => 'Something New',
             'devi[content]' => 'Something New',
             'devi[reference]' => 'Something New',

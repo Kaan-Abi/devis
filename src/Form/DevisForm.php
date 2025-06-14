@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Devis;
+use App\Form\Type\RichTextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -25,7 +26,7 @@ class DevisForm extends AbstractType
                 'by_reference' => false,
                 'entry_options' => [
                     'attr' => [
-                        'class' => 'mb-1 row justify-content-start align-items-end devisLine'
+                        'class' => 'devisLine'
                     ],
                     'row_attr' => [
                         'class' => 'mb-3 devisLineRootParent'
@@ -34,12 +35,11 @@ class DevisForm extends AbstractType
                 ],
 
             ])
-            ->add('additionalNote')
-            ->add('totalPriceHT', MoneyType::class, [
+            ->add('additionalNote', RichTextType::class)
+            ->add('totalHT', MoneyType::class, [
                 'currency' => 'EUR' //TODO: plus tard gérer l'internationalisation
             ])
-            ->add('vat', PercentType::class)
-            ->add('totalPrice', MoneyType::class, [
+            ->add('totalTTC', MoneyType::class, [
                 'currency' => 'EUR' //TODO: plus tard gérer l'internationalisation
             ])
         ;
