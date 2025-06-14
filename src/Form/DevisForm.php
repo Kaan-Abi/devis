@@ -37,10 +37,16 @@ class DevisForm extends AbstractType
             ])
             ->add('additionalNote', RichTextType::class)
             ->add('totalHT', MoneyType::class, [
-                'currency' => 'EUR' //TODO: plus tard gérer l'internationalisation
+                'currency' => 'EUR', //TODO: plus tard gérer l'internationalisation
+                'attr' => [
+                    'class' => 'js-total-ht-price'
+                ]
             ])
             ->add('totalTTC', MoneyType::class, [
-                'currency' => 'EUR' //TODO: plus tard gérer l'internationalisation
+                'currency' => 'EUR', //TODO: plus tard gérer l'internationalisation
+                'attr' => [
+                    'class' => 'js-total-ttc-price'
+                ]
             ])
         ;
     }

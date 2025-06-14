@@ -19,12 +19,25 @@ class DevisLineForm extends AbstractType
             ->add('quantity', IntegerType::class, [
                 'empty_data' => '1'
             ])
-            ->add('totalHT', MoneyType::class, [
-                'currency' => 'EUR' //TODO: plus tard gérer l'internationalisation
+            ->add('htPrice', MoneyType::class, [
+                'currency' => 'EUR', //TODO: plus tard gérer l'internationalisation
+                'attr' => [
+                    'class' => 'js-ht-price',
+                ],
+                'scale' => 2
             ])
-            ->add('vat', PercentType::class)
-            ->add('totalTTC', MoneyType::class, [
-                'currency' => 'EUR' //TODO: plus tard gérer l'internationalisation
+            ->add('vat', PercentType::class, [
+                'attr' => [
+                    'class' => 'js-vat'
+                ]
+            ])
+            ->add('ttcPrice', MoneyType::class, [
+                'currency' => 'EUR', //TODO: plus tard gérer l'internationalisation
+                'attr' => [
+                    'class' => 'js-ttc-price',
+                ],
+                'disabled' => true,
+                'scale' => 2
             ])
         ;
     }

@@ -33,11 +33,9 @@
                     </td>
                 </tr>
             {% else %}
-                <tr>
-                    <td colspan="5">
-                        {{ "table.no_results"|trans({}, 'interface') }}
-                    </td>
-                </tr>
+                <div>
+                    {{ "table.no_results"|trans({}, 'interface') }}
+                </div>
             {% endfor %}
             </tbody>
         </table>

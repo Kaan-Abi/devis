@@ -11,6 +11,8 @@ description: Description
 quantity: Quantité
 client: Client
 additionalNote: Notes additionnelles
-totalHT: Prix HT
-totalTTC: Prix TTC
+totalHT: Total HT
+totalTTC: Total TTC
 vat: TVA
+htPrice: Prix HT
+ttcPrice: Prix TTC

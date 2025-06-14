@@ -24,7 +24,27 @@ document.addEventListener('DOMContentLoaded', async function () {
         toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | link'
     });
 
+    function updateTTCPrice(container) {
+        const htInput = container.querySelector('.js-ht-price');
+        const vatInput = container.querySelector('.js-vat');
+        const ttcInput = container.querySelector('.js-ttc-price');
+
+        const htValue = parseFloat(htInput.value) || 0;
+        const vatValue = parseFloat(vatInput.value) || 0;
+
+        const ttc = htValue * (1 + vatValue / 100);
+        ttcInput.value = ttc.toFixed(2);
+    }
+
+    document.querySelectorAll('.js-ht-price, .js-vat').forEach(input => {
+        input.addEventListener('input', () => {
+            const container = input.closest('.form-row') || input.closest('.row') || input.closest('tr') || input.parentElement.parentElement.parentElement;
+            updateTTCPrice(container);
+        });
+    });
+
 });
+
 document.addEventListener('collection-type-element-added', async function (e){
     await initRichEditor({
         target: e.detail.addedElement.querySelector('.rich-text'),
