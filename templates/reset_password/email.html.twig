@@ -1,9 +1,11 @@
-<h1>Hi!</h1>
+<h1>{{ 'reset_password.email.Hi!'|trans({}, 'interface') }}</h1>
 
-<p>To reset your password, please visit the following link</p>
+<p>{{ 'reset_password.email.To reset your password, please visit the following link'|trans({}, 'interface') }}</p>
 
 <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
 
-<p>This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+<p>
+    {{ 'reset_password.email.This link will expire in {{ expirationMessageKey }}.'|trans({'{{ expirationMessageKey }}': resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'interface')}, 'interface') }}
+</p>
 
-<p>Cheers!</p>
+<p>{{ 'reset_password.email.Cheers!'|trans({}, 'interface') }}</p>

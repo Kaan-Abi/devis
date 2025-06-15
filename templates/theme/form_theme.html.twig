@@ -14,3 +14,10 @@
     {{ form_row(form.vat, {'attr': {'class': 'form-control js-vat'}}) }}
     {{ form_row(form.totalTTC, {'attr': {'class': 'form-control js-total-ttc'}}) }}
 {% endblock %}
+
+{% block tel_widget %}
+    <div class="input-group">
+        <span class="input-group-text">+33</span>
+        {{ block('form_widget_simple') }}
+    </div>
+{% endblock %}
