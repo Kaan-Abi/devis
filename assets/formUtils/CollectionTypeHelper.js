@@ -1,5 +1,4 @@
-class CollectionTypeHandler
-{
+export class CollectionTypeHandler {
 
     constructor(
         collectionTypeId,
@@ -8,8 +7,7 @@ class CollectionTypeHandler
         deleteButton,
         deleteButtonHTML,
         nbParentElement
-    )
-    {
+    ) {
         this.nbElements = 0;
         this.collectionTypeId = collectionTypeId
         this.elementsClass = elementsClass
@@ -29,7 +27,7 @@ class CollectionTypeHandler
      * @param void
      * @throws Error
      */
-    initListeners(){
+    initListeners() {
         $(this.addButton).on('click', () => this.addElement());
     }
 
@@ -40,7 +38,7 @@ class CollectionTypeHandler
      * @param void
      * @throws Error
      */
-    initElements(){
+    initElements() {
         this.nbElements = $(this.elementsClass).length;
         $(this.elementsClass).each((index, element) => this.addDeleteButtonToElement(element));
     }
@@ -52,12 +50,12 @@ class CollectionTypeHandler
      * @param void
      * @throws Error
      */
-    addElement(){
+    addElement() {
         let dataPrototype = $(this.collectionTypeId).attr('data-prototype');
         dataPrototype = dataPrototype.replace(/__name__/g, this.nbElements);
-        dataPrototype = dataPrototype.replace(/__name__label__/g,'');
+        dataPrototype = dataPrototype.replace(/__name__label__/g, '');
 
-        $( this.collectionTypeId).append(dataPrototype);
+        $(this.collectionTypeId).append(dataPrototype);
 
         const newElementId = this.collectionTypeId + '_' + this.nbElements
 
@@ -79,8 +77,8 @@ class CollectionTypeHandler
      * @throws Error
      * @param event
      */
-    deleteElement(event){
-        let element = $(event.target).closest(this.elementsClass+'RootParent');
+    deleteElement(event) {
+        let element = $(event.target).closest(this.elementsClass + 'RootParent');
         document.dispatchEvent(new CustomEvent('collection-type-element-removed', {
             detail: {
                 collectionTypeId: this.collectionTypeId,
@@ -95,5 +93,3 @@ class CollectionTypeHandler
         $(this.deleteButton).on('click', (event) => this.deleteElement(event));
     }
 }
-
-export default CollectionTypeHandler;

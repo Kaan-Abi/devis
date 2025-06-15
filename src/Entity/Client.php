@@ -36,6 +36,10 @@ class Client
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $siret = null;
 
+    #[ORM\ManyToOne(inversedBy: 'clients')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $clientOf = null;
+
     public function __construct()
     {
         $this->devis = new ArrayCollection();
@@ -132,6 +136,18 @@ class Client
     public function setSiret(?string $siret): static
     {
         $this->siret = $siret;
+
+        return $this;
+    }
+
+    public function getClientOf(): ?User
+    {
+        return $this->clientOf;
+    }
+
+    public function setClientOf(?User $clientOf): static
+    {
+        $this->clientOf = $clientOf;
 
         return $this;
     }

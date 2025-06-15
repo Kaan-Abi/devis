@@ -1,7 +1,17 @@
 import './devisForm.css'
-import CollectionTypeHandler from '../formUtils/CollectionTypeHelper.js';
+import {CollectionTypeHandler} from '../formUtils/CollectionTypeHelper.js';
 import {destroyRichEditor, initRichEditor} from "../formUtils/richText";
 import {deleteButtonCross} from "../htmlTemplates/deleteButtonCross";
+import {TaxedPricesHelper} from "../formUtils/TaxedPricesHelper";
+
+let taxedPricesHelper = new TaxedPricesHelper(
+    '#devis_form_totalHT',
+    '#devis_form_totalTTC',
+    '.js-ht-price',
+    '.js-vat',
+    '.js-ttc-price'
+)
+
 document.addEventListener('DOMContentLoaded', async function () {
     let collectionTypeHandlerContent = new CollectionTypeHandler(
         '#devis_form_content',
@@ -24,25 +34,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | link'
     });
 
-    function updateTTCPrice(container) {
-        const htInput = container.querySelector('.js-ht-price');
-        const vatInput = container.querySelector('.js-vat');
-        const ttcInput = container.querySelector('.js-ttc-price');
-
-        const htValue = parseFloat(htInput.value) || 0;
-        const vatValue = parseFloat(vatInput.value) || 0;
-
-        const ttc = htValue * (1 + vatValue / 100);
-        ttcInput.value = ttc.toFixed(2);
-    }
-
-    document.querySelectorAll('.js-ht-price, .js-vat').forEach(input => {
-        input.addEventListener('input', () => {
-            const container = input.closest('.form-row') || input.closest('.row') || input.closest('tr') || input.parentElement.parentElement.parentElement;
-            updateTTCPrice(container);
-        });
-    });
-
+    taxedPricesHelper.initTaxedPricesListener()
 });
 
 document.addEventListener('collection-type-element-added', async function (e){
@@ -53,9 +45,13 @@ document.addEventListener('collection-type-element-added', async function (e){
         menubar: false,
         toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | link'
     });
+    taxedPricesHelper.initTaxedPricesListener()
 })
 
 document.addEventListener('collection-type-element-removed', function (e) {
     const textareaId =  e.detail.deletedElement.querySelector('textarea').id
     destroyRichEditor(textareaId)
+    requestAnimationFrame(() => {
+        taxedPricesHelper.updateTotalPrices();
+    });
 })

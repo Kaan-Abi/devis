@@ -14,9 +14,23 @@ table:
 
 save: Enregistrer
 delete: Supprimer
+send: Envoyer
 
 form:
     confirm: Etes-vous sûrs de vouloir supprimer cet élément ?
+
+
+login:
+    connected_as : Vous êtes connecté.e en tant que
+    logout : Se déconnecter
+    please_login: Veuillez vous connecter
+    forgot_password: Mot de passe oublié ?
+    create_account: Créer un compte
+    title: Se connecter
+
+reset_password:
+    reset_title: Réinitialiser votre mot de passe
+    help_message: Entrez votre email et nous vous enverrons un lien pour réinitialiser votre mot de passe. Vérifiez bien vos spams
 
 client:
     index:

@@ -16,3 +16,8 @@ totalTTC: Total TTC
 vat: TVA
 htPrice: Prix HT
 ttcPrice: Prix TTC
+
+#LOGIN
+password: Mot de passe
+remember_me: Se souvenir de moi
+login: Se connecter
