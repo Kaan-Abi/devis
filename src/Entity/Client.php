@@ -6,6 +6,7 @@ use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 class Client
@@ -13,18 +14,23 @@ class Client
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('read')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('read')]
     private ?string $name = null;
 
     #[ORM\Column(length: 20, nullable: true)]
+    #[Groups('read')]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('read')]
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('read')]
     private ?string $address = null;
 
     /**
@@ -34,6 +40,7 @@ class Client
     private Collection $devis;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('read')]
     private ?string $siret = null;
 
     #[ORM\ManyToOne(inversedBy: 'clients')]

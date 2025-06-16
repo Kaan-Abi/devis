@@ -3,6 +3,10 @@ import {CollectionTypeHandler} from '../formUtils/CollectionTypeHelper.js';
 import {destroyRichEditor, initRichEditor} from "../formUtils/richText";
 import {deleteButtonCross} from "../htmlTemplates/deleteButtonCross";
 import {TaxedPricesHelper} from "../formUtils/TaxedPricesHelper";
+import TomSelect from "tom-select/base";
+import 'tom-select/dist/css/tom-select.bootstrap5.css'
+import Routing from "fos-router";
+const routes = require('../js/routes.json');
 
 let taxedPricesHelper = new TaxedPricesHelper(
     '#devis_form_totalHT',
@@ -11,6 +15,8 @@ let taxedPricesHelper = new TaxedPricesHelper(
     '.js-vat',
     '.js-ttc-price'
 )
+
+Routing.setRoutingData(routes)
 
 document.addEventListener('DOMContentLoaded', async function () {
     let collectionTypeHandlerContent = new CollectionTypeHandler(
@@ -35,6 +41,35 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 
     taxedPricesHelper.initTaxedPricesListener()
+
+    new TomSelect('#devis_form_client_name', {
+        valueField: 'name',
+        labelField: 'name',
+        searchField: 'name',
+        create: true, // ✅ Permet la création d'un nouveau client
+        render: {
+            no_results: function() {
+                return ''; // ❌ pas de texte, pas d'affichage
+            }
+        },
+        load: function(query, callback) {
+            fetch(Routing.generate('autocomplete_client', {q: encodeURIComponent(query)}))
+                .then(res => res.json())
+                .then(data => callback(data))
+                .catch(() => callback());
+        },
+        onItemAdd: function(value, item) {
+            console.log(value, item)
+            fetch(Routing.generate('autocomplete_client_data', {id: value}))
+                .then(res => res.json())
+                .then(client => {
+                    console.log(client)
+                    // document.querySelector('#client_email').value = client.email;
+                    // document.querySelector('#client_id').value = client.id;
+                    // ... autres champs
+                });
+        }
+    });
 });
 
 document.addEventListener('collection-type-element-added', async function (e){

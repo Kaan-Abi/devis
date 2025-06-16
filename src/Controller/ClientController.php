@@ -30,6 +30,7 @@ final class ClientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $client->setClientOf($this->getUser());
             $entityManager->persist($client);
             $entityManager->flush();
 

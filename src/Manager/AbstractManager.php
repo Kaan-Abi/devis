@@ -3,18 +3,26 @@ namespace App\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\Service\Attribute\Required;
 
 abstract class AbstractManager
 {
     protected ?EntityManagerInterface $entityManager = null;
+    protected ?Security $security = null;
     protected TokenStorageInterface $tokenStorage;
 
     #[Required]
     public function setObjectManager(EntityManagerInterface $entityManager): void
     {
         $this->entityManager = $entityManager;
+    }
+
+    #[Required]
+    public function setSecurity(Security $security): void
+    {
+        $this->security = $security;
     }
 
     public function getRepository(): ObjectRepository

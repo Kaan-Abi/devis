@@ -6,6 +6,7 @@ use App\Entity\Devis;
 use App\Form\Type\RichTextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,6 +19,10 @@ class DevisForm extends AbstractType
         $builder
             ->add('author', UserForm::class)
             ->add('client', ClientForm::class)
+            //Used to get existent client
+            ->add('client_id', HiddenType::class, [
+                'mapped' => false
+            ])
             ->add('content', CollectionType::class, [
                 'entry_type' => DevisLineForm::class,
                 'allow_add' => true,
