@@ -32,7 +32,9 @@ final class DevisController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form->get('content'), $form->get('content')->getData());
+            //TODO: check verifs for client
+            $deviLines = $form->get('content')->getData();
+            $devi->setContent($deviLines);
             $entityManager->persist($devi);
             $entityManager->flush();
 

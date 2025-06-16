@@ -26,6 +26,7 @@ class ResetPasswordController extends AbstractController
 
     public function __construct(
         private readonly ResetPasswordHelperInterface $resetPasswordHelper,
+        private readonly ResetPasswordService $resetPasswordService,
         private readonly EntityManagerInterface $entityManager
     ) {
     }
@@ -43,8 +44,7 @@ class ResetPasswordController extends AbstractController
             /** @var string $email */
             $email = $form->get('email')->getData();
 
-            return $this->processSendingPasswordResetEmail($email, $mailer, $translator
-            );
+            return $this->processSendingPasswordResetEmail($email);
         }
 
         return $this->render('reset_password/request.html.twig', [
@@ -120,7 +120,7 @@ class ResetPasswordController extends AbstractController
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_devis_index');
         }
 
         return $this->render('reset_password/reset.html.twig', [
@@ -128,7 +128,7 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
-    private function processSendingPasswordResetEmail(string $emailFormData, ResetPasswordService $resetPasswordService): RedirectResponse
+    private function processSendingPasswordResetEmail(string $emailFormData): RedirectResponse
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
@@ -142,20 +142,20 @@ class ResetPasswordController extends AbstractController
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
         } catch (ResetPasswordExceptionInterface $e) {
-            // If you want to tell the user why a reset email was not sent, uncomment
-            // the lines below and change the redirect to 'app_forgot_password_request'.
-            // Caution: This may reveal if a user is registered or not.
-            //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     '%s - %s',
-            //     $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
-            //     $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
-            // ));
+//             If you want to tell the user why a reset email was not sent, uncomment
+//             the lines below and change the redirect to 'app_forgot_password_request'.
+//             Caution: This may reveal if a user is registered or not.
+
+//             $this->addFlash('reset_password_error', sprintf(
+//                 '%s - %s',
+//                 $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
+//                 $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
+//             ));
 
             return $this->redirectToRoute('app_check_email');
         }
 
-        $resetPasswordService->sendResetPasswordMail(
+        $this->resetPasswordService->sendResetPasswordMail(
             $user->getEmail(),
             ['resetToken' => $resetToken,]
         );

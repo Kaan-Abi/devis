@@ -41,7 +41,6 @@ export class TaxedPricesHelper {
         htPriceElements.forEach(element => {
             totalHTPrice += parseFloat(element.value) || 0
         })
-        console.log(htPriceElements)
         document.querySelector(this.totalHTSelector).value = totalHTPrice.toFixed(2);
 
         let totalTTCPrice = 0;
@@ -49,7 +48,6 @@ export class TaxedPricesHelper {
         ttcPriceElements.forEach(element => {
             totalTTCPrice += parseFloat(element.value) || 0
         })
-        console.log(ttcPriceElements)
         document.querySelector(this.totalTTCSelector).value = totalTTCPrice.toFixed(2);
     }
 }

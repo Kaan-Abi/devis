@@ -24,3 +24,7 @@ login: Se connecter
 
 #Registration
 plainPassword: Mot de passe
+
+#Reset password
+first: Nouveau mot de passe
+second: Confirmez votre mot de passe

@@ -20,7 +20,7 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\Service\MailerService:
+    App\Service\MailTemplateService:
         arguments:
             $mailBotName: '%env(MAILBOT_NAME)%'
             $noReplyAddress: '%env(NO_REPLY_ADDRESS)%'

@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,8 +16,13 @@ class UserForm extends AbstractType
         $builder
             ->add('name')
             ->add('siret')
-            ->add('email')
-            ->add('phone')
+            ->add('email', EmailType::class)
+            ->add('phone', TelType::class, [
+                'attr' => [
+                    'pattern' => '[0-9]{9}',
+                    'inputmode' => 'numeric',
+                ],
+            ])
             ->add('address')
         ;
     }

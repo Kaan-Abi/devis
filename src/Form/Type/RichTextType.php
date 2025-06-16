@@ -11,6 +11,7 @@ class RichTextType extends AbstractType
     {
         $resolver->setDefaults([
             'attr' => ['class' => 'rich-text'],
+            'required' => false,
         ]);
     }
 

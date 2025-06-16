@@ -49,7 +49,6 @@ reset_password:
     email:
         Hi!: "Salut !"
         To reset your password, please visit the following link: "Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien suivant"
-        This link will expire in {{ expirationMessageKey }}.: "Ce lien expirera dans {{ expirationMessageKey }}."
         Cheers!: "Bien à vous !"
 
 

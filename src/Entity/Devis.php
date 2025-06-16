@@ -21,9 +21,6 @@ class Devis
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?float $totalPrice = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $additionalNote = null;
 
@@ -33,7 +30,7 @@ class Devis
     #[ORM\Column(length: 255)]
     private ?string $reference = null;
 
-    #[ORM\ManyToOne(inversedBy: 'devis')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'devis')]
     private ?Client $client = null;
 
     #[ORM\ManyToOne(inversedBy: 'devis')]
@@ -73,18 +70,6 @@ class Devis
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getTotalPrice(): ?float
-    {
-        return $this->totalPrice;
-    }
-
-    public function setTotalPrice(?float $totalPrice): static
-    {
-        $this->totalPrice = $totalPrice;
 
         return $this;
     }

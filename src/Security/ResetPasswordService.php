@@ -25,6 +25,5 @@ class ResetPasswordService
         ->context($context);
 
         $this->mailer->send($email);
-
     }
 }
