@@ -25,11 +25,14 @@ final class DevisController extends AbstractController
     #[Route('/new', name: 'app_devis_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
         $devi = new Devis();
+        $devi->setAuthor($user);
         $form = $this->createForm(DevisForm::class, $devi);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            dd($form->get('content'), $form->get('content')->getData());
             $entityManager->persist($devi);
             $entityManager->flush();
 

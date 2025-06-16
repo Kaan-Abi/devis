@@ -1,3 +1,7 @@
 label {
     text-wrap: nowrap !important;
 }
+
+.dropdown-menu[data-bs-popper] {
+    left: auto!important;
+}
