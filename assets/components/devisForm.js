@@ -58,16 +58,18 @@ document.addEventListener('DOMContentLoaded', async function () {
                 .then(data => callback(data))
                 .catch(() => callback());
         },
-        onItemAdd: function(value, item) {
-            fetch(Routing.generate('autocomplete_client_data', {name: value}))
-                .then(res => res.json())
-                .then(client => {
-                    document.querySelector('#devis_form_client_siret').value = client.siret;
-                    document.querySelector('#devis_form_client_address').value = client.address;
-                    document.querySelector('#devis_form_client_email').value = client.email;
-                    document.querySelector('#devis_form_client_phone').value = client.phone;
-                    document.querySelector('#devis_form_client_id').value = client.id;
-                });
+        onItemAdd: async function(value, item) {
+            const response= await fetch(Routing.generate('autocomplete_client_data', {name: value}))
+            const client = await response.json()
+            if (client){
+                document.querySelector('#devis_form_client_siret').value = client.siret;
+                document.querySelector('#devis_form_client_address').value = client.address;
+                document.querySelector('#devis_form_client_email').value = client.email;
+                document.querySelector('#devis_form_client_phone').value = client.phone;
+                document.querySelector('#devis_form_client_id').value = client.id;
+            }else {
+                document.querySelector('#devis_form_client_id').value = null;
+            }
         }
     });
 });
