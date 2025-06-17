@@ -25,9 +25,4 @@ class ClientManager extends AbstractManager
             ->getQuery()
             ->getArrayResult();
     }
-
-    public function searchForExistingClient(Client $client): Client
-    {
-        //TODO: faire cette fonction
-    }
 }

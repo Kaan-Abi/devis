@@ -3,6 +3,7 @@ namespace App\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
+use ReflectionClass;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Contracts\Service\Attribute\Required;
@@ -63,6 +64,23 @@ abstract class AbstractManager
     {
         return $this->getRepository()->findAll();
     }
+
+    public function mergeObjects(object $source, object $target): void
+    {
+        $reflection = new ReflectionClass($source);
+        foreach ($reflection->getProperties() as $property) {
+            $getter = 'get' . ucfirst($property->getName());
+            $setter = 'set' . ucfirst($property->getName());
+
+            if (method_exists($source, $getter) && method_exists($target, $setter)) {
+                $value = $source->$getter();
+                if ($value !== null) {
+                    $target->$setter($value);
+                }
+            }
+        }
+    }
+
 
     public function removeAll(): void
     {

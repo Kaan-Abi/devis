@@ -43,9 +43,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     taxedPricesHelper.initTaxedPricesListener()
 
     new TomSelect('#devis_form_client_name', {
-        valueField: 'name',
-        labelField: 'name',
-        searchField: 'name',
+        valueField: 'value',
+        labelField: 'text',
+        searchField: 'text',
         create: true, // ✅ Permet la création d'un nouveau client
         render: {
             no_results: function() {
@@ -59,14 +59,14 @@ document.addEventListener('DOMContentLoaded', async function () {
                 .catch(() => callback());
         },
         onItemAdd: function(value, item) {
-            console.log(value, item)
-            fetch(Routing.generate('autocomplete_client_data', {id: value}))
+            fetch(Routing.generate('autocomplete_client_data', {name: value}))
                 .then(res => res.json())
                 .then(client => {
-                    console.log(client)
-                    // document.querySelector('#client_email').value = client.email;
-                    // document.querySelector('#client_id').value = client.id;
-                    // ... autres champs
+                    document.querySelector('#devis_form_client_siret').value = client.siret;
+                    document.querySelector('#devis_form_client_address').value = client.address;
+                    document.querySelector('#devis_form_client_email').value = client.email;
+                    document.querySelector('#devis_form_client_phone').value = client.phone;
+                    document.querySelector('#devis_form_client_id').value = client.id;
                 });
         }
     });

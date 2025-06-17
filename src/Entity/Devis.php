@@ -103,9 +103,10 @@ class Devis
         return $this->reference;
     }
 
-    public function setReference(string $reference): static
+    #[ORM\PrePersist]
+    public function setReference(): static
     {
-        $this->reference = $reference;
+        $this->reference = 'DEVIS-'.strtoupper(uniqid());
 
         return $this;
     }
@@ -118,7 +119,6 @@ class Devis
     public function setClient(?Client $client): static
     {
         $this->client = $client;
-
         return $this;
     }
 
