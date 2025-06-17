@@ -3,10 +3,11 @@ ARG FRANKENPHP_VERSION=1
 FROM dunglas/frankenphp:${FRANKENPHP_VERSION}-php${PHP_VERSION}-bookworm AS base
 RUN apt-get update && apt-get install -y --no-install-recommends \
     acl \
+    wkhtmltopdf \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN install-php-extensions \
-            pgsql \
+        pgsql \
         zip \
         intl \
         pdo \

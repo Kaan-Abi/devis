@@ -22,6 +22,19 @@ register: S'inscrire
 form:
     confirm: Etes-vous sûrs de vouloir supprimer cet élément ?
 
+home:
+    tab_title: Accueil
+    title: "Créez vos devis en quelques clics"
+    subtitle: "Une solution simple, rapide et professionnelle pour générer et gérer vos devis, adaptée aux petites entreprises, artisans et indépendants."
+    cta_login: "Me connecter"
+    cta_create_account: "Créer mon compte gratuitement"
+    cta_create_devis: "Créer un devis"
+    section_1_title: "Simplicité"
+    section_1_text: "Une interface pensée pour aller à l'essentiel, même si vous n'êtes pas à l’aise avec l’informatique."
+    section_2_title: "Gain de temps"
+    section_2_text: "Créez un devis, ajoutez un client, et envoyez-le en PDF en moins de 2 minutes."
+    section_3_title: "Professionnalisme"
+    section_3_text: "Impressionnez vos clients avec des devis clairs, propres et personnalisés à votre image."
 
 login:
     connected_as : Vous êtes connecté.e en tant que

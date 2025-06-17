@@ -1,0 +1,41 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block tab_title %}Accueil{% endblock %}
+
+{% block body %}
+    <div class="container text-center mt-5">
+        <h1 class="display-4">{{ 'home.title'|trans({}, 'interface') }}</h1>
+        <p class="lead mt-3">{{ 'home.subtitle'|trans({}, 'interface') }}</p>
+
+
+        {% if app.user %}
+            <a href="{{ path('app_devis_index') }}" class="btn btn-primary btn-lg mt-4">
+                {{ 'home.cta_create_devis'|trans({}, 'interface') }}
+            </a>
+        {% else %}
+            <a href="{{ path('app_login') }}" class="btn btn-primary btn-lg mt-4">
+                {{ 'home.cta_login'|trans({}, 'interface') }}
+            </a>
+            <a href="{{ path('app_register') }}" class="btn btn-primary btn-lg mt-4">
+                {{ 'home.cta_create_account'|trans({}, 'interface') }}
+            </a>
+        {% endif %}
+
+        <hr class="my-5">
+
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <h3>{{ 'home.section_1_title'|trans({}, 'interface') }}</h3>
+                <p>{{ 'home.section_1_text'|trans({}, 'interface') }}</p>
+            </div>
+            <div class="col-md-4">
+                <h3>{{ 'home.section_2_title'|trans({}, 'interface') }}</h3>
+                <p>{{ 'home.section_2_text'|trans({}, 'interface') }}</p>
+            </div>
+            <div class="col-md-4">
+                <h3>{{ 'home.section_3_title'|trans({}, 'interface') }}</h3>
+                <p>{{ 'home.section_3_text'|trans({}, 'interface') }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

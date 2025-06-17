@@ -1,7 +1,7 @@
 {% extends 'admin_base.html.twig' %}
 
-{% block title %}{{ "devis.edit.title"|trans({'%devis_reference%': devis.reference}, 'interface') }}{% endblock %}
-{% block tab_title %}{{ "devis.edit.title"|trans({'%devis_reference%': devis.reference}, 'interface') }}{% endblock %}
+{% block title %}{{ "devis.edit.title"|trans({'%devis_reference%': devi.reference}, 'interface') }}{% endblock %}
+{% block tab_title %}{{ "devis.edit.title"|trans({'%devis_reference%': devi.reference}, 'interface') }}{% endblock %}
 
 
 {% block body %}
@@ -13,4 +13,14 @@
         <i class="fas fa-arrow-left"></i>
         {{ "devis.edit.back_to_list"|trans({}, 'interface') }}
     </a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('devisForm') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('devisForm') }}
 {% endblock %}

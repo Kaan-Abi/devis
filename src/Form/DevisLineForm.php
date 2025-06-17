@@ -3,13 +3,11 @@
 namespace App\Form;
 
 use App\Form\Type\RichTextType;
-use App\Model\DevisLine;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class DevisLineForm extends AbstractType
@@ -40,17 +38,8 @@ class DevisLineForm extends AbstractType
                 'attr' => [
                     'class' => 'js-ttc-price',
                 ],
-                'disabled' => true,
                 'scale' => 2
             ])
         ;
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            // Configure your form options here
-            'data_class' => DevisLine::class
-        ]);
     }
 }

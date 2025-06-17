@@ -43,6 +43,9 @@ class Devis
     #[ORM\Column]
     private ?float $totalTTC = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pdfFilename = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -67,9 +70,9 @@ class Devis
     }
 
     #[ORM\PreUpdate]
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    public function setUpdatedAt(): static
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -166,6 +169,18 @@ class Devis
     public function setTotalTTC(float $totalTTC): static
     {
         $this->totalTTC = $totalTTC;
+
+        return $this;
+    }
+
+    public function getPdfFilename(): ?string
+    {
+        return $this->pdfFilename;
+    }
+
+    public function setPdfFilename(?string $pdfFilename): static
+    {
+        $this->pdfFilename = $pdfFilename;
 
         return $this;
     }

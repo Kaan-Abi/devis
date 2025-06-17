@@ -24,5 +24,8 @@ services:
         arguments:
             $mailBotName: '%env(MAILBOT_NAME)%'
             $noReplyAddress: '%env(NO_REPLY_ADDRESS)%'
+    App\Service\DevisPdfManager:
+        arguments:
+            $pdfStoragePath: '%env(PDF_STORAGE_PATH)%'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

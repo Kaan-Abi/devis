@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ "devis.client"|trans({}, 'documents')}} {{ devis.reference }}</title>
+    <style>
+        body { font-family: DejaVu Sans, sans-serif; font-size: 12px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .section { margin-bottom: 20px; }
+        .table { width: 100%; border-collapse: collapse; }
+        .table th, .table td { border: 1px solid #000; padding: 8px; }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h2>{{ "devis.title"|trans({}, 'documents')}} {{ devis.reference }}</h2>
+    <p>{{ "devis.createdAt"|trans({}, 'documents')}} {{ devis.createdAt|date('d/m/Y') }}</p>
+</div>
+
+<div class="section">
+    <h3>{{ "devis.client"|trans({}, 'documents')}}</h3>
+    <p><strong>{{ devis.client.name }}</strong></p>
+    {% if devis.client.address %}<p>{{ devis.client.address }}</p>{% endif %}
+    {% if devis.client.phone %}<p>{{ "devis.phone"|trans({}, 'documents')}} : {{ devis.client.phone }}</p>{% endif %}
+    {% if devis.client.email %}<p>{{ "devis.email"|trans({}, 'documents')}} : {{ devis.client.email }}</p>{% endif %}
+</div>
+
+<div class="section">
+    <h3>{{ "devis.devis_details"|trans({}, 'documents')}}</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>{{ "devis.content.description"|trans({}, 'documents')}}</th>
+            <th>{{ "devis.content.quantity"|trans({}, 'documents')}}</th>
+            <th>{{ "devis.content.htPrice"|trans({}, 'documents')}}</th>
+            <th>{{ "devis.content.vat"|trans({}, 'documents')}}</th>
+            <th>{{ "devis.content.ttcPrice"|trans({}, 'documents')}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in devis.content %}
+            <tr>
+                <td>{{ item.description|raw }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.htPrice }} €</td>
+                <td>{{ item.vat }} %</td>
+                <td>{{ item.ttcPrice }} €</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="section">
+    <p><strong>{{ "devis.totalHT"|trans({}, 'documents')}}</strong> {{ devis.totalHT }} €</p>
+    <p><strong>{{ "devis.totalTTC"|trans({}, 'documents')}}</strong> {{ devis.totalTTC }} €</p>
+</div>
+
+{% if devis.additionalNote %}
+    <div class="section">
+        <h3>{{ "devis.note"|trans({}, 'documents')}}</h3>
+        <p>{{ devis.additionalNote|raw }}</p>
+    </div>
+{% endif %}
+
+<div class="section">
+    <p><small>{{ "devis.created_by"|trans({}, 'documents')}} {{ devis.author.name }}</small></p>
+</div>
+</body>
+</html>

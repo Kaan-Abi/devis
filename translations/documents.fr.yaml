@@ -1,0 +1,17 @@
+devis:
+  title: Devis
+  createdAt: "Émis le :"
+  client: Client
+  phone: Téléphone
+  email: Email
+  devis_details: Détails du devis
+  content_table:
+    description: Description
+    quantity: Quantité
+    htPrice: Prix HT
+    vat: TVA
+    ttcPrice: Prix TTC
+  totalHT: "Total HT :"
+  totalTTC: "Total TTC :"
+  note: Note
+  created_by: Établi par

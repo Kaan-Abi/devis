@@ -22,8 +22,12 @@ class AutocompleteController extends AbstractController
     }
 
     #[Route('/client/data/{name}', name: 'client_data', options: ['expose' => true])]
-    public function getClientData(Request $request, ?Client $client): JsonResponse
+    public function getClientData(ClientManager $clientManager, ?string $name = null): JsonResponse
     {
+        $client = $clientManager->findOneBy([
+            'name' => $name,
+            'clientOf' => $this->getUser()
+        ]);
         return $this->json($client,200, [], ['groups' => 'read']);
     }
 
