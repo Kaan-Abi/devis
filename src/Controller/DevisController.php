@@ -65,7 +65,7 @@ final class DevisController extends AbstractController
 
             $devisPdfManager->generate($devi);
 
-            return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_devis_show', ['id' => $devi->getId()]);
         }
 
         return $this->render('devis/new.html.twig', [

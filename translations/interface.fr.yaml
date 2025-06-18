@@ -101,5 +101,10 @@ devis:
         title: Création d'un nouveau devis
         back_to_list: Retour à la liste des devis
     edit:
-        title: Modification de %devis_reference%
+        title: Modification de %devis_referencedevis_reference%
         back_to_list: Retour à la liste des devis
+    show:
+        title: Consultation du devis %devis_reference%
+        back_to_list: Retour à la liste des devis
+        download_devis: Télécharger le devis
+        delete_devis: Supprimer

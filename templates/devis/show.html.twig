@@ -1,0 +1,17 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}{{ "devis.show.title"|trans({'%devis_reference%': devi.reference}, 'interface') }}{% endblock %}
+{% block tab_title %}{{ "devis.show.title"|trans({'%devis_reference%': devi.reference}, 'interface') }}{% endblock %}
+
+{% block body %}
+    <div class="card bg-white shadow border-1 p-3">
+        {# TODO: add collapsible thing to show devis #}
+        <a href="{{ path('app_devis_download', {id: devi.id}) }}" class="btn btn-primary btn-lg mt-4">
+            {{ 'devis.show.download_devis'|trans({}, 'interface') }}
+        </a>
+    </div>
+    <a class="btn btn-link float-end" href="{{ path('app_devis_index') }}">
+        <i class="fas fa-arrow-left"></i>
+        {{ "devis.show.back_to_list"|trans({}, 'interface') }}
+    </a>
+{% endblock %}
