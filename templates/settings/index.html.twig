@@ -1,0 +1,13 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block title %}{{ "settings.title"|trans({}, 'interface') }}{% endblock %}
+{% block tab_title %}{{ "settings.title"|trans({}, 'interface') }}{% endblock %}
+
+{% block body %}
+    <div class="card bg-white shadow border-1 p-3">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-primary">{{ button_label|default("save"|trans({}, 'interface')) }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

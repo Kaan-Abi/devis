@@ -31,6 +31,13 @@ final class Menu
                 active: $this->urlIsFromCurrentSubpath('app_devis_index'),
                 icon: 'fa-solid fa-file-invoice'
             ),
+            new MenuItem(
+                title:'sidebar.settings',
+                routeName: 'app_settings_index',
+                active: $this->urlIsFromCurrentSubpath('app_settings_index'),
+                icon: 'fas fa-gear'
+
+            )
         ];
     }
 

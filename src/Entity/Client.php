@@ -11,7 +11,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 #[UniqueEntity('name')]
-class Client
+class Client implements AccessLimitedToUserEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -159,5 +159,10 @@ class Client
         $this->clientOf = $clientOf;
 
         return $this;
+    }
+
+    public function getUser(): User
+    {
+        return $this->getClientOf();
     }
 }
