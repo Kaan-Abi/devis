@@ -19,44 +19,28 @@
     {% endblock %}
 
 </head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="">{{ "app_name"|trans({}, 'interface') }}</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
 
-<body class="bg-gradient-primary">
-
-<div class="container">
-
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
-
-        <div class="col-xl-10 col-lg-12 col-md-9">
-
-            <div class="card o-hidden border-0 shadow-lg my-5">
-                <div class="card-body p-0">
-                    <!-- Nested Row within Card Body -->
-                    <div class="row">
-{#                        <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>#}
-                        <div>
-                            <div class="p-5">
-{#                                <div class="text-center">#}
-{#                                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>#}
-{#                                </div>#}
-                                {% for label, messages in app.flashes %}
-                                    {% for message in messages %}
-                                        <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
-                                            {{ message|trans() }}
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                        </div>
-                                    {% endfor %}
-                                {% endfor %}
-                                {% block body %}{% endblock %}
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                                {{ message|trans() }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% block body %}{% endblock %}
             </div>
-
         </div>
     </div>
-</div>
 </body>
 
 </html>
