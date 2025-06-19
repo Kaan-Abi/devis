@@ -1,5 +1,6 @@
 app_name: 'Devis Facile'
-
+copyright: Copyright
+all_right_reserved: Tous droits réservés
 sidebar:
     clients: Clients
     devis: Devis

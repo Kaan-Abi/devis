@@ -22,7 +22,6 @@
     {{ component('Navbar')}}
     {{ component('Menu')}}
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
                 {% for label, messages in app.flashes %}
@@ -54,8 +53,8 @@
     </div>
 
     <footer class="main-footer">
-        <strong>Copyright &copy; 2025</strong>
-        Touts droits réservés
+        <strong>{{"copyright"|trans({}, 'interface')}} &copy; 2025</strong>
+        {{"all_rights_reserved"|trans({}, 'interface')}}
         <div class="float-right d-none d-sm-inline-block">
             <b>Version</b> 0.0.1
         </div>
