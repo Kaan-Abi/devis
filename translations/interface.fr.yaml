@@ -1,12 +1,13 @@
-app_name: 'Devis Facile'
+app_name: 'Pro Devis'
 
 sidebar:
     clients: Clients
     devis: Devis
+    settings: Paramètres
 
 navbar:
     profile: Profile
-    settings: Settings
+    settings: Paramètres
     logout: Se déconnecter
 
 table:
@@ -35,6 +36,9 @@ home:
     section_2_text: "Créez un devis, ajoutez un client, et envoyez-le en PDF en moins de 2 minutes."
     section_3_title: "Professionnalisme"
     section_3_text: "Impressionnez vos clients avec des devis clairs, propres et personnalisés à votre image."
+
+setting:
+    title: Informations utilisateur
 
 login:
     connected_as : Vous êtes connecté.e en tant que

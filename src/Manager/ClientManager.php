@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\Client;
+use App\Entity\Devis;
 use App\Entity\User;
 use App\Repository\ClientRepository;
 
@@ -24,5 +25,21 @@ class ClientManager extends AbstractManager
             ->select(['client.name as value', 'client.name as text'])
             ->getQuery()
             ->getArrayResult();
+    }
+
+    public function updateClientFromDevisForm(Devis $devis, ?int $clientId): ?Client
+    {
+        if($clientId){
+            $client = $this->find($clientId);
+            if ($client){
+                // Update the clients info from this form
+                $this->mergeObjects($devis->getClient(),$client);
+                $devis->setClient($client);
+            }
+        }else {
+            $client = $devis->getClient();
+            $client?->setClientOf($this->security->getUser());
+        }
+        return $client;
     }
 }

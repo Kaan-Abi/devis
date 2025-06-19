@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DevisRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Devis
+class Devis implements AccessLimitedToUserEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -183,5 +183,10 @@ class Devis
         $this->pdfFilename = $pdfFilename;
 
         return $this;
+    }
+
+    public function getUser(): User
+    {
+        return $this->getAuthor();
     }
 }

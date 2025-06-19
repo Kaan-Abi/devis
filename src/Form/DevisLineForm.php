@@ -19,7 +19,7 @@ class DevisLineForm extends AbstractType
                 'constraints' => [new NotBlank()]
             ])
             ->add('quantity', IntegerType::class, [
-                'empty_data' => '1'
+                'required' => false,
             ])
             ->add('htPrice', MoneyType::class, [
                 'currency' => 'EUR', //TODO: plus tard gérer l'internationalisation

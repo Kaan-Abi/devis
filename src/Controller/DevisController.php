@@ -6,6 +6,7 @@ use App\Entity\Devis;
 use App\Form\DevisForm;
 use App\Manager\ClientManager;
 use App\Repository\DevisRepository;
+use App\Security\Voter\ResourceAccessVoter;
 use App\Service\DevisPdfManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -21,7 +23,9 @@ use Twig\Error\SyntaxError;
 final class DevisController extends AbstractController
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager
+        private readonly EntityManagerInterface $entityManager,
+        private readonly ClientManager $clientManager,
+        private readonly DevisPdfManager $devisPdfManager
     )
     {
     }
@@ -29,7 +33,7 @@ final class DevisController extends AbstractController
     public function index(DevisRepository $devisRepository): Response
     {
         return $this->render('devis/index.html.twig', [
-            'devis' => $devisRepository->findAll(),
+            'devis' => $devisRepository->findBy(['author' => $this->getUser()]),
         ]);
     }
 
@@ -39,7 +43,7 @@ final class DevisController extends AbstractController
      * @throws LoaderError
      */
     #[Route('/new', name: 'app_devis_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ClientManager $clientManager, DevisPdfManager $devisPdfManager): Response
+    public function new(Request $request): Response
     {
         $user = $this->getUser();
         $devi = new Devis();
@@ -48,22 +52,15 @@ final class DevisController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($form->get('client_id')->getData()){
-                $client = $clientManager->find($form->get('client_id')->getData());
-                // Update the clients info from this form
-                $clientManager->mergeObjects($devi->getClient(),$client);
-                $devi->setClient($client);
-            }else {
-                $client = $devi->getClient();
-                $client->setClientOf($this->getUser());
-            }
+            $this->clientManager->updateClientFromDevisForm($devi,(int) $form->get('client_id')->getData());
+
             $deviLines = $form->get('content')->getData();
             $devi->setContent($deviLines);
 
             $this->entityManager->persist($devi);
             $this->entityManager->flush();
 
-            $devisPdfManager->generate($devi);
+            $this->devisPdfManager->generate($devi);
 
             return $this->redirectToRoute('app_devis_show', ['id' => $devi->getId()]);
         }
@@ -75,6 +72,7 @@ final class DevisController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_devis_show', methods: ['GET'])]
+    #[IsGranted(ResourceAccessVoter::VIEW,'devi')]
     public function show(Devis $devi): Response
     {
         return $this->render('devis/show.html.twig', [
@@ -83,23 +81,18 @@ final class DevisController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_devis_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Devis $devi, ClientManager $clientManager): Response
+    #[IsGranted(ResourceAccessVoter::EDIT,'devi')]
+    public function edit(Request $request, Devis $devi): Response
     {
         $form = $this->createForm(DevisForm::class, $devi);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($form->get('client_id')->getData()){
-                $client = $clientManager->find($form->get('client_id')->getData());
-                // Update the clients info from this form
-                $clientManager->mergeObjects($devi->getClient(),$client);
-                $devi->setClient($client);
-            }else {
-                $client = $devi->getClient();
-                $client->setClientOf($this->getUser());
-            }
+            $this->clientManager->updateClientFromDevisForm($devi, $form->get('client_id')->getData());
+
             $deviLines = $form->get('content')->getData();
             $devi->setContent($deviLines);
+
             $this->entityManager->flush();
 
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
@@ -112,6 +105,7 @@ final class DevisController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_devis_delete', methods: ['POST'])]
+    #[IsGranted(ResourceAccessVoter::DELETE,'devi')]
     public function delete(Request $request, Devis $devi): Response
     {
         if ($this->isCsrfTokenValid('delete'.$devi->getId(), $request->getPayload()->getString('_token'))) {
@@ -123,12 +117,14 @@ final class DevisController extends AbstractController
     }
 
     #[Route('/{id}/pdf', name: 'app_devis_download')]
-    public function downloadPdf(Devis $devis, DevisPdfManager $devisPdfManager): BinaryFileResponse
+    #[IsGranted(ResourceAccessVoter::VIEW,'devis')]
+    public function downloadPdf(Devis $devis): BinaryFileResponse
     {
-        if ($this->getUser()->getId() !== $devis->getAuthor()->getId()){
+        if ( !$this->getUser() ||
+            $this->getUser()->getId() !== $devis->getAuthor()?->getId()){
             $this->createAccessDeniedException();
         }
-        $path = $devisPdfManager->getPdfPath($devis);
+        $path = $this->devisPdfManager->getPdfPath($devis);
 
         if (!$path || !file_exists($path)) {
             throw $this->createNotFoundException('PDF non disponible.');
