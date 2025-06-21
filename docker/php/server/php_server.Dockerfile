@@ -13,6 +13,9 @@ RUN install-php-extensions \
         pdo \
         pdo_pgsql
 
+RUN mkdir -p /app/scripts
+RUN cp /usr/bin/wkhtmltopdf /app/scripts
+
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 COPY ./docker/php/conf.d/php.ini $PHP_INI_DIR/conf.d/
