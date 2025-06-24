@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
-#[UniqueEntity('name')]
+#[UniqueEntity(fields: ['name', 'clientOf'])]
 class Client implements AccessLimitedToUserEntityInterface
 {
     #[ORM\Id]

@@ -31,11 +31,11 @@ final class ClientController extends AbstractController
     public function new(Request $request): Response
     {
         $client = new Client();
+        $client->setClientOf($this->getUser());
         $form = $this->createForm(ClientForm::class, $client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $client->setClientOf($this->getUser());
             $this->entityManager->persist($client);
             $this->entityManager->flush();
 

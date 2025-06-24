@@ -13,54 +13,55 @@
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
+    {% block wrapper %}
+        <!-- Preloader -->
+    {#    <div class="preloader flex-column justify-content-center align-items-center">#}
+    {#        <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">#}
+    {#    </div>#}
 
-    <!-- Preloader -->
-{#    <div class="preloader flex-column justify-content-center align-items-center">#}
-{#        <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">#}
-{#    </div>#}
-
-    {{ component('Navbar')}}
-    {{ component('Menu')}}
-    <div class="content-wrapper">
-        <div class="content-header">
-            <div class="container-fluid">
-                {% for label, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
-                            {{ message|trans() }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
+        {{ component('Navbar')}}
+        {{ component('Menu')}}
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container-fluid">
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                                {{ message|trans() }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">{% block title %}{% endblock %}</h1>
-                    </div><!-- /.col -->
-{#                    <div class="col-sm-6">#}
-{#                        <ol class="breadcrumb float-sm-right">#}
-{#                            <li class="breadcrumb-item"><a href="#">Home</a></li>#}
-{#                            <li class="breadcrumb-item active">Dashboard v1</li>#}
-{#                        </ol>#}
-{#                    </div><!-- /.col -->#}
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">{% block title %}{% endblock %}</h1>
+                        </div><!-- /.col -->
+    {#                    <div class="col-sm-6">#}
+    {#                        <ol class="breadcrumb float-sm-right">#}
+    {#                            <li class="breadcrumb-item"><a href="#">Home</a></li>#}
+    {#                            <li class="breadcrumb-item active">Dashboard v1</li>#}
+    {#                        </ol>#}
+    {#                    </div><!-- /.col -->#}
+                    </div>
                 </div>
             </div>
+            <section class="content">
+                <div class="container-fluid">
+                    {% block body %}{% endblock %}
+                </div>
+            </section>
         </div>
-        <section class="content">
-            <div class="container-fluid">
-                {% block body %}{% endblock %}
+
+        <footer class="main-footer">
+            <strong>{{"copyright"|trans({}, 'interface')}} &copy; 2025</strong>
+            {{"all_rights_reserved"|trans({}, 'interface')}}
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 0.0.1
             </div>
-        </section>
-    </div>
+        </footer>
 
-    <footer class="main-footer">
-        <strong>{{"copyright"|trans({}, 'interface')}} &copy; 2025</strong>
-        {{"all_rights_reserved"|trans({}, 'interface')}}
-        <div class="float-right d-none d-sm-inline-block">
-            <b>Version</b> 0.0.1
-        </div>
-    </footer>
-
-    <aside class="control-sidebar control-sidebar-dark"></aside>
+        <aside class="control-sidebar control-sidebar-dark"></aside>
+    {% endblock %}
 </div>
 </body>
 </html>

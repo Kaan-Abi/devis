@@ -9,35 +9,37 @@
         {{ "devis.index.create_new"|trans({}, 'interface') }}
     </a>
     <div class="bg-white shadow border-1 p-3">
-        <table class="table dataTable">
-            <thead>
-            <tr>
-                <th>{{ "devis.index.table.header.reference"|trans({}, 'interface') }}</th>
-                <th>{{ "devis.index.table.header.client"|trans({}, 'interface') }}</th>
-                <th>{{ "devis.index.table.header.createdAt"|trans({}, 'interface') }}</th>
-                <th>{{ "devis.index.table.header.totalTTC"|trans({}, 'interface') }}</th>
-                <th>{{ "devis.index.table.header.actions"|trans({}, 'interface') }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for devi in devis %}
+        <div class="table-responsive">
+            <table class="table dataTable">
+                <thead>
                 <tr>
-                    <td>{{ devi.reference }}</td>
-                    <td>{{ devi.client.name }}</td>
-                    <td>{{ devi.createdAt ? devi.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ devi.totalTTC }}</td>
-                    <td>
-                        <a class="btn btn-warning" href="{{ path('app_devis_edit', {'id': devi.id}) }}">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                    </td>
+                    <th>{{ "devis.index.table.header.reference"|trans({}, 'interface') }}</th>
+                    <th>{{ "devis.index.table.header.client"|trans({}, 'interface') }}</th>
+                    <th>{{ "devis.index.table.header.createdAt"|trans({}, 'interface') }}</th>
+                    <th>{{ "devis.index.table.header.totalTTC"|trans({}, 'interface') }}</th>
+                    <th>{{ "devis.index.table.header.actions"|trans({}, 'interface') }}</th>
                 </tr>
-            {% else %}
-                <div>
-                    {{ "table.no_results"|trans({}, 'interface') }}
-                </div>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for devi in devis %}
+                    <tr>
+                        <td>{{ devi.reference }}</td>
+                        <td>{{ devi.client.name }}</td>
+                        <td>{{ devi.createdAt ? devi.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ devi.totalTTC }}</td>
+                        <td>
+                            <a class="btn btn-warning" href="{{ path('app_devis_edit', {'id': devi.id}) }}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <div>
+                        {{ "table.no_results"|trans({}, 'interface') }}
+                    </div>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
