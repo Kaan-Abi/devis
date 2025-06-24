@@ -1,0 +1,22 @@
+/*!************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[1].use[1]!./assets/components/devisForm.css ***!
+  \************************************************************************************************************************/
+.devisLine {
+    display: grid;
+    grid-gap: 1%;
+    align-items: end;
+}
+/* 📱 Mobile : tous les éléments prennent toute la largeur */
+@media screen and (max-width: 576px) {
+    .devisLine {
+        grid-template-columns: 100%;
+    }
+}
+@media screen and (min-width: 577px) {
+    .devisLine {
+        grid-template-columns: 50% 10% 10% 10% 10% 5%;
+    }
+}
+
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGV2aXNGb3JtLmNzcyIsIm1hcHBpbmdzIjoiOzs7QUFBQTtJQUNJLGFBQWE7SUFDYixZQUFZO0lBQ1osZ0JBQWdCO0FBQ3BCO0FBQ0EsNERBQTREO0FBQzVEO0lBQ0k7UUFDSSwyQkFBMkI7SUFDL0I7QUFDSjtBQUNBO0lBQ0k7UUFDSSw2Q0FBNkM7SUFDakQ7QUFDSiIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL2Fzc2V0cy9jb21wb25lbnRzL2RldmlzRm9ybS5jc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLmRldmlzTGluZSB7XHJcbiAgICBkaXNwbGF5OiBncmlkO1xyXG4gICAgZ3JpZC1nYXA6IDElO1xyXG4gICAgYWxpZ24taXRlbXM6IGVuZDtcclxufVxyXG4vKiDwn5OxIE1vYmlsZSA6IHRvdXMgbGVzIMOpbMOpbWVudHMgcHJlbm5lbnQgdG91dGUgbGEgbGFyZ2V1ciAqL1xyXG5AbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiA1NzZweCkge1xyXG4gICAgLmRldmlzTGluZSB7XHJcbiAgICAgICAgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiAxMDAlO1xyXG4gICAgfVxyXG59XHJcbkBtZWRpYSBzY3JlZW4gYW5kIChtaW4td2lkdGg6IDU3N3B4KSB7XHJcbiAgICAuZGV2aXNMaW5lIHtcclxuICAgICAgICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IDUwJSAxMCUgMTAlIDEwJSAxMCUgNSU7XHJcbiAgICB9XHJcbn1cclxuIl0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9*/
