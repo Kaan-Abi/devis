@@ -26,3 +26,5 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+storage/devis_pdfs/*
+!storage/devis_pdfs/.gitkeep
