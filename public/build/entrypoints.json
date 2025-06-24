@@ -3,24 +3,24 @@
     "app": {
       "js": [
         "/build/runtime.js",
-        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_fortawesome_fontawesome--d4b886.js",
+        "/build/vendors-node_modules_jquery_dist_jquery_js-node_modules_core-js_internals_environment_js-node-61344a.js",
+        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_fortawesome_fontawesome--34d6b8.js",
         "/build/app.js"
       ],
       "css": [
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_fortawesome_fontawesome--d4b886.css",
+        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js-node_modules_fortawesome_fontawesome--34d6b8.css",
         "/build/app.css"
       ]
     },
     "devisForm": {
       "js": [
         "/build/runtime.js",
-        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
-        "/build/vendors-node_modules_fos-router_public_js_router_js-node_modules_tinymce_skins_ui_oxide_conte-2a767a.js",
+        "/build/vendors-node_modules_jquery_dist_jquery_js-node_modules_core-js_internals_environment_js-node-61344a.js",
+        "/build/vendors-node_modules_fos-router_public_js_router_js-node_modules_tinymce_skins_ui_oxide_conte-f9df2b.js",
         "/build/devisForm.js"
       ],
       "css": [
-        "/build/vendors-node_modules_fos-router_public_js_router_js-node_modules_tinymce_skins_ui_oxide_conte-2a767a.css",
+        "/build/vendors-node_modules_fos-router_public_js_router_js-node_modules_tinymce_skins_ui_oxide_conte-f9df2b.css",
         "/build/devisForm.css"
       ]
     }
