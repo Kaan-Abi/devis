@@ -2,18 +2,22 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>{{ "devis.client"|trans({}, 'documents') }} {{ devis.reference }}</title>
     <style>
         body {
-            font-family: DejaVu Sans, sans-serif;
+            font-family: "DejaVu Sans", Arial, sans-serif;
             font-size: 12px;
-            padding: 40px;
+            padding: 20px;
             color: #333;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         h2, h3 {
@@ -21,36 +25,43 @@
             color: #444;
         }
 
-        .flex-row {
-            display: flex;
-            justify-content: space-between;
+        .row {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
             margin-bottom: 30px;
+        }
+
+        .cell {
+            display: table-cell;
+            vertical-align: top;
+            width: 50%;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+
+        .cell + .cell {
+            padding-left: 20px;
         }
 
         .section {
             margin-bottom: 30px;
         }
 
-        .box {
-            border: 1px solid #ccc;
-            padding: 15px;
-            width: 48%;
-            border-radius: 4px;
-        }
-
         .table {
             width: 100%;
             border-collapse: collapse;
-        }
-
-        .table th {
-            background-color: #f8f8f8;
+            font-size: 12px;
         }
 
         .table th, .table td {
-            border: 1px solid #ccc;
-            padding: 8px;
+            border: 1px solid #000;
+            padding: 6px;
             text-align: left;
+        }
+
+        .table th {
+            background-color: #eee;
         }
 
         .total {
@@ -64,38 +75,51 @@
     </style>
 </head>
 <body>
-
 <div class="header">
     <h2>{{ "devis.title"|trans({}, 'documents') }} {{ devis.reference }}</h2>
     <p>{{ "devis.createdAt"|trans({}, 'documents') }} {{ devis.createdAt|date('d/m/Y') }}</p>
 </div>
 
-<div class="flex-row">
-    <div class="box">
+<div class="row">
+    <div class="cell">
         <h3>{{ "devis.issued_by"|trans({}, 'documents') }}</h3>
 
         <p><strong>{{ devis.author.name }}</strong></p>
         {% if devis.author.address %}
+
             <p>{{ devis.author.address }}</p>
         {% endif %}
         {% if devis.author.phone %}
-            <p>{{ "devis.phone"|trans({}, 'documents') }} : {{ '+33 ' ~ devis.author.phone }}</p>{% endif %}
-        {% if devis.author.email %}
-            <p>{{ "devis.email"|trans({}, 'documents') }} : {{ devis.author.email }}</p>{% endif %}
-        {% if devis.author.siret %}
-            <p>{{ "devis.siret"|trans({}, 'documents') }} : {{ devis.author.siret }}</p>{% endif %}
-    </div>
 
-    <div class="box">
+            <p>{{ "devis.phone"|trans({}, 'documents') }} : {{ '+33 ' ~ devis.author.phone }}</p>
+        {% endif %}
+        {% if devis.author.email %}
+
+            <p>{{ "devis.email"|trans({}, 'documents') }} : {{ devis.author.email }}</p>
+        {% endif %}
+        {% if devis.author.siret %}
+
+            <p>{{ "devis.siret"|trans({}, 'documents') }} : {{ devis.author.siret }}</p>
+        {% endif %}
+    </div>
+    <div class="cell">
         <h3>{{ "devis.client"|trans({}, 'documents') }}</h3>
 
         <p><strong>{{ devis.client.name }}</strong></p>
-        {% if devis.client.address %}<p>{{ devis.client.address }}</p>{% endif %}
+        {% if devis.client.address %}
+            <p>{{ devis.client.address }}</p>
+        {% endif %}
         {% if devis.client.phone %}
-            <p>{{ "devis.phone"|trans({}, 'documents') }} : {{ devis.client.phone }}</p>{% endif %}
+
+            <p>{{ "devis.phone"|trans({}, 'documents') }} : {{ devis.client.phone }}</p>
+        {% endif %}
         {% if devis.client.email %}
-            <p>{{ "devis.email"|trans({}, 'documents') }} : {{ devis.client.email }}</p>{% endif %}
-        {% if devis.client.siret %}<p>{{ "devis.siret"|trans({}, 'documents') }} : {{ devis.client.siret }}</p>{% endif %}
+
+            <p>{{ "devis.email"|trans({}, 'documents') }} : {{ devis.client.email }}</p>
+        {% endif %}
+        {% if devis.client.siret %}
+            <p>{{ "devis.siret"|trans({}, 'documents') }} : {{ devis.client.siret }}</p>
+        {% endif %}
     </div>
 </div>
 
@@ -114,10 +138,10 @@
         <tbody>
         {% for item in devis.content %}
             <tr>
-                <td>{{ item.description|raw }}</td>
+                <td>{{ item.description|striptags }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.htPrice }} €</td>
-                <td>{{ item.vat }} %</td>
+                <td>{{ item.vat * 100}} %</td>
                 <td>{{ item.ttcPrice }} €</td>
             </tr>
         {% endfor %}
@@ -133,15 +157,14 @@
 {% if devis.additionalNote %}
     <div class="section">
         <h3>{{ "devis.note"|trans({}, 'documents') }}</h3>
-        <p>{{ devis.additionalNote|raw }}</p>
+        <p>{{ devis.additionalNote|striptags }}</p>
     </div>
 {% endif %}
 
 <div class="section">
+    {{ "devis.created_by"|trans({}, 'documents') }}
 
-    {{ "devis.created_by"|trans({}, 'documents') }} <p><small>{{ devis.author.name }}</small></p>
+    <p><small>{{ devis.author.name }}</small></p>
 </div>
-
 </body>
 </html>
-

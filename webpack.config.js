@@ -16,6 +16,11 @@ Encore
         from: 'node_modules/tinymce/skins',
         to: 'skins/[path]/[name].[ext]'
     })
+    .copyFiles({
+        from: './assets/icons',
+        pattern: /\.(ico|png)$/, // copie tous les fichiers .ico ou .png
+        to: '[name].[ext]'       // copie à la racine du dossier public/build
+    })
     // only needed for CDN's or subdirectory deploy
     //.setManifestKeyPrefix('build/')
 
