@@ -4,9 +4,9 @@
 
 {% block wrapper %}
     <div class="container text-center mt-5">
+        <img src="{{ asset('build/logo.png') }}" width="300" height="300" alt="ProDevisLogo">
         <h1 class="display-4">{{ 'home.title'|trans({}, 'interface') }}</h1>
         <p class="lead mt-3">{{ 'home.subtitle'|trans({}, 'interface') }}</p>
-
 
         {% if app.user %}
             <a href="{{ path('app_devis_index') }}" class="btn btn-primary btn-lg mt-4">
