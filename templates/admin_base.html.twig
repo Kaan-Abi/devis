@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block tab_title %}{% endblock %}</title>
-    <link rel="icon" href="{{ asset('build/prodevis.ico') }}">
+    <link rel="icon" href="{{ asset('build/icone.ico') }}">
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
@@ -15,9 +15,9 @@
 <div class="wrapper">
     {% block wrapper %}
         <!-- Preloader -->
-    {#    <div class="preloader flex-column justify-content-center align-items-center">#}
-    {#        <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">#}
-    {#    </div>#}
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__shake" src="{{ asset('build/logo.png') }}" alt="ProDevisLogo" height="120" width="120">
+        </div>
 
         {{ component('Navbar')}}
         {{ component('Menu')}}
