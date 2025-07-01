@@ -26,7 +26,7 @@
                         <td>{{ devi.reference }}</td>
                         <td>{{ devi.client.name }}</td>
                         <td>{{ devi.createdAt ? devi.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                        <td>{{ devi.totalTTC }}</td>
+                        <td>{{ devi.totalTTC }} €</td>
                         <td>
                             <a class="btn btn-warning" href="{{ path('app_devis_edit', {'id': devi.id}) }}">
                                 <i class="fas fa-edit"></i>
