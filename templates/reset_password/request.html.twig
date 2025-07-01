@@ -12,7 +12,7 @@
         {{ form_row(requestForm.email) }}
         <div>
             <small>
-                {{ "reset_password.help_message"|trans({}, 'interface') }}
+                {{ "reset_password.help_message"|trans({}, 'interface')|raw }}
             </small>
         </div>
 

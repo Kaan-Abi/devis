@@ -63,7 +63,7 @@ reset_password:
     email_sent: Email de réinitialisation de mot de passe envoyé
     mail_message: Si un compte correspondant à votre adresse e-mail existe, un e-mail vient de vous être envoyé contenant un lien pour réinitialiser votre mot de passe.
     expire_link: Ce lien expirera dans
-    mail_last_message: Si vous ne recevez pas d’e-mail, veuillez vérifier votre dossier de courriers indésirables ou
+    mail_last_message: Si vous ne recevez pas d’e-mail, <strong>veuillez vérifier votre dossier de courriers indésirables ou</strong>
     email:
         Hi!: "Salut !"
         To reset your password, please visit the following link: "Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien suivant"

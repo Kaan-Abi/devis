@@ -7,5 +7,5 @@
         {{ "reset_password.mail_message"|trans({}, 'interface') }}
         {{ "reset_password.expire_link"|trans({}, 'interface') }} {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
     </p>
-    <p>{{ "reset_password.mail_last_message"|trans({}, 'interface') }}<a href="{{ path('app_forgot_password_request') }}"> {{ "try_again"|trans({}, 'interface')}} </a>.</p>
+    <p>{{ "reset_password.mail_last_message"|trans({}, 'interface')|raw }}<a href="{{ path('app_forgot_password_request') }}"> {{ "try_again"|trans({}, 'interface')}} </a>.</p>
 {% endblock %}
