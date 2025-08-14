@@ -13,12 +13,12 @@ use Twig\Error\SyntaxError;
 
 class DevisPdfManager
 {
+    public const GUESTS_DIRECTORY='guests';
     private string $storagePath;
 
     public function __construct(
         private readonly Pdf                    $pdfGenerator,
         private readonly Environment            $twig,
-        private readonly EntityManagerInterface $em,
         KernelInterface                         $kernel,
         private readonly string $pdfStoragePath
     )
@@ -33,22 +33,26 @@ class DevisPdfManager
      */
     public function generate(Devis $devis): void
     {
+        $directory  = $devis->getAuthor() ? $devis->getAuthor()->getId() : self::GUESTS_DIRECTORY;
+        $filename = $devis->getReference() . '.pdf';
+        $fullPath = $this->storagePath . $directory . '/' . $filename;
+
+        if (file_exists($fullPath)) {
+            unlink($fullPath);
+        }
+
         $html = $this->twig->render('document/pdf/devis.html.twig', [
             'devis' => $devis,
         ]);
 
-        $directory  = $devis->getAuthor()->getId();
-        $filename = $devis->getReference() . '.pdf';
-        $fullPath = $this->storagePath . $directory . '/' . $filename;
 
-        if (!is_dir($this->storagePath)) {
-            mkdir($this->storagePath, 0775, true);
+        if (!is_dir($this->storagePath) && !mkdir($concurrentDirectory = $this->storagePath, 0775, true) && !is_dir($concurrentDirectory)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
 
         $this->pdfGenerator->generateFromHtml($html, $fullPath);
 
         $devis->setPdfFilename($filename);
-        $this->em->flush();
     }
 
     public function getPdfPath(Devis $devis): ?string
@@ -59,5 +63,10 @@ class DevisPdfManager
         $directory  = $devis->getAuthor()->getId();
 
         return $this->storagePath . $directory . '/' . $devis->getPdfFilename();
+    }
+
+    public function deletePdf(Devis $devis): void
+    {
+        unlink($this->getPdfPath($devis));
     }
 }

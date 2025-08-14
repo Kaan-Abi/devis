@@ -19,6 +19,10 @@
             <a href="{{ path('app_register') }}" class="btn btn-primary btn-lg mt-4">
                 {{ 'home.cta_create_account'|trans({}, 'interface') }}
             </a>
+            <br>
+            <a href="{{ path('app_devis_index') }}" class="btn btn-light btn-lg mt-4 border border-1">
+                {{ 'login.continue_as_guest'|trans({}, 'interface') }}
+            </a>
         {% endif %}
 
         <hr class="my-5">

@@ -6,6 +6,7 @@ use App\Entity\Client;
 use App\Form\ClientForm;
 use App\Repository\ClientRepository;
 use App\Security\Voter\ResourceAccessVoter;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,10 +21,15 @@ final class ClientController extends AbstractController
     {
     }
     #[Route(name: 'app_client_index', methods: ['GET'])]
-    public function index(ClientRepository $clientRepository): Response
+    public function index(Request $request,ClientRepository $clientRepository): Response
     {
+        if ($this->getUser()){
+            $clients = $clientRepository->findBy(['clientOf' => $this->getUser()]);
+        }else{
+            $clients = $request->getSession()->get('clients', new ArrayCollection());
+        }
         return $this->render('client/index.html.twig', [
-            'clients' => $clientRepository->findBy(['clientOf' => $this->getUser()]),
+            'clients' => $clients,
         ]);
     }
 

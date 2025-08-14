@@ -106,10 +106,9 @@ class Devis implements AccessLimitedToUserEntityInterface
         return $this->reference;
     }
 
-    #[ORM\PrePersist]
-    public function setReference(): static
+    public function generateReference(): static
     {
-        $this->reference = 'DEVIS-'.strtoupper(uniqid());
+        $this->reference = 'DEVIS-'.strtoupper(uniqid('', true));
 
         return $this;
     }

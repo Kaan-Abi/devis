@@ -33,9 +33,13 @@
 </form>
 <hr>
 <div class="text-center">
+    <a class="btn btn-light" href="{{ path('app_devis_index') }}">{{ 'login.continue_as_guest'|trans({}, 'interface')}}!</a>
+</div>
+<div class="text-center">
     <a class="small" href="{{ path('app_forgot_password_request') }}">{{ 'login.forgot_password'|trans({}, 'interface')}}</a>
 </div>
 <div class="text-center">
     <a class="small" href="{{ path('app_register') }}">{{ 'login.create_account'|trans({}, 'interface')}}!</a>
 </div>
+
 {% endblock %}

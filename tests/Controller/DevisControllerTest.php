@@ -70,7 +70,7 @@ final class DevisControllerTest extends WebTestCase
         $fixture->setTotalPrice('My Title');
         $fixture->setAdditionalNote('My Title');
         $fixture->setContent('My Title');
-        $fixture->setReference('My Title');
+        $fixture->generateReference('My Title');
 
         $this->manager->persist($fixture);
         $this->manager->flush();
@@ -92,7 +92,7 @@ final class DevisControllerTest extends WebTestCase
         $fixture->setTotalPrice('Value');
         $fixture->setAdditionalNote('Value');
         $fixture->setContent('Value');
-        $fixture->setReference('Value');
+        $fixture->generateReference('Value');
 
         $this->manager->persist($fixture);
         $this->manager->flush();
@@ -129,7 +129,7 @@ final class DevisControllerTest extends WebTestCase
         $fixture->setTotalPrice('Value');
         $fixture->setAdditionalNote('Value');
         $fixture->setContent('Value');
-        $fixture->setReference('Value');
+        $fixture->generateReference('Value');
 
         $this->manager->persist($fixture);
         $this->manager->flush();

@@ -4,10 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Devis;
 use App\Form\DevisForm;
-use App\Manager\ClientManager;
+use App\Handler\DevisHandler;
 use App\Repository\DevisRepository;
 use App\Security\Voter\ResourceAccessVoter;
 use App\Service\DevisPdfManager;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -23,17 +24,22 @@ use Twig\Error\SyntaxError;
 final class DevisController extends AbstractController
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        private readonly ClientManager $clientManager,
-        private readonly DevisPdfManager $devisPdfManager
+        private readonly DevisPdfManager $devisPdfManager,
+        private readonly DevisHandler $devisHandler,
     )
     {
     }
     #[Route(name: 'app_devis_index', methods: ['GET'])]
-    public function index(DevisRepository $devisRepository): Response
+    public function index(Request $request, DevisRepository $devisRepository): Response
     {
+        if ($this->getUser()){
+            $devis = $devisRepository->findBy(['author' => $this->getUser()]);
+        }else {
+            $devis = $request->getSession()->get('devis', new ArrayCollection());
+        }
+
         return $this->render('devis/index.html.twig', [
-            'devis' => $devisRepository->findBy(['author' => $this->getUser()]),
+            'devis' => $devis,
         ]);
     }
 
@@ -52,16 +58,8 @@ final class DevisController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->clientManager->updateClientFromDevisForm($devi,(int) $form->get('client_id')->getData());
 
-            $deviLines = $form->get('content')->getData();
-            $devi->setContent($deviLines);
-
-            $this->entityManager->persist($devi);
-            $this->entityManager->flush();
-
-            $this->devisPdfManager->generate($devi);
-
+            $this->devisHandler->handle($devi, $form);
             return $this->redirectToRoute('app_devis_show', ['id' => $devi->getId()]);
         }
 
@@ -88,12 +86,7 @@ final class DevisController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->clientManager->updateClientFromDevisForm($devi, $form->get('client_id')->getData());
-
-            $deviLines = $form->get('content')->getData();
-            $devi->setContent($deviLines);
-
-            $this->entityManager->flush();
+            $this->devisHandler->handle($devi, $form);
 
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -109,8 +102,7 @@ final class DevisController extends AbstractController
     public function delete(Request $request, Devis $devi): Response
     {
         if ($this->isCsrfTokenValid('delete'.$devi->getId(), $request->getPayload()->getString('_token'))) {
-            $this->entityManager->remove($devi);
-            $this->entityManager->flush();
+            $this->devisHandler->delete($devi);
         }
 
         return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);

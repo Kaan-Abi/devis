@@ -6,3 +6,5 @@ update_schema:
 	docker compose exec php_server php bin/console d:s:u --force
 update_js_routes:
 	docker compose exec php_server php bin/console fos:js-routing:dump --format=json --target=assets/js/routes.json
+load_fixtures:
+	docker compose exec php_server php bin/console d:f:l --no-interaction

@@ -48,6 +48,7 @@ login:
     forgot_password: Mot de passe oublié ?
     create_account: Créer un compte
     title: Se connecter
+    continue_as_guest: Continuer en tant qu'invité
 
 registration:
     Hi! Please confirm your email!: "Salut ! Veuillez confirmer votre adresse email !"
