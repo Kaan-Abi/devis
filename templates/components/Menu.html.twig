@@ -3,7 +3,7 @@
         <a href="#" class="brand-link">
             <span class="brand-text font-weight-light">{{ "app_name"|trans({},'interface') }}</span>
         </a>
-        <div class="sidebar">
+        <div class="sidebar position-relative">
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="info">
                     <a href="#" class="d-block">{{ app.user ? app.user.name : ''}}</a>
@@ -22,6 +22,15 @@
                     {% endfor %}
                 </ul>
             </nav>
+
+            {% if app.user %}
+                <!-- Logout Button -->
+                <div class="sidebar-footer position-fixed bottom-0 left-0" >
+                    <a href="{{ path('app_logout') }}" class="btn btn-block">
+                        <i class="fas fa-sign-out-alt mr-2"></i>{{ 'login.logout'|trans({}, 'interface') }}
+                    </a>
+                </div>
+            {% endif %}
         </div>
     </aside>
 </div>
