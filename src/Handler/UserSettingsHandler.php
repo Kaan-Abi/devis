@@ -27,5 +27,4 @@ class UserSettingsHandler
             $this->session->set('user', $user);
         }
     }
-
 }

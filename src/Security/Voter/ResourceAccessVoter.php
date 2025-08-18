@@ -11,7 +11,7 @@ final class ResourceAccessVoter extends Voter
 {
     public const EDIT = 'EDIT';
     public const VIEW = 'VIEW';
-    public const DELETE = 'VIEW';
+    public const DELETE = 'DELETE';
 
     protected function supports(string $attribute, mixed $subject): bool
     {

@@ -31,7 +31,7 @@
                         <td>{{ client.email }}</td>
                         <td>{{ client.address }}</td>
                         <td>
-                            <a class="btn btn-warning" href="{{ path('app_client_edit', {'id': client.id}) }}">
+                            <a class="btn btn-warning" href="{{ path('app_client_edit', {'uniqueIdentifier': client.uniqueIdentifier}) }}">
                                 <i class="fas fa-edit"></i>
                             </a>
                         </td>

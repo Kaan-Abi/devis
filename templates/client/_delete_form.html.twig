@@ -1,5 +1,5 @@
-<form method="post" action="{{ path('app_client_delete', {'id': client.id}) }}" onsubmit="return confirm({{ "form.confirm"|trans({},'interface') }});">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ client.id) }}">
+<form method="post" action="{{ path('app_client_delete', {'uniqueIdentifier': client.uniqueIdentifier}) }}" onsubmit="return confirm({{ "form.confirm"|trans({},'interface') }});">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ client.uniqueIdentifier) }}">
     <button class="btn btn-danger">
         {{ "delete"|trans({}, 'interface') }}
     </button>

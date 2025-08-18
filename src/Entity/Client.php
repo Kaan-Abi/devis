@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 #[UniqueEntity(fields: ['name', 'clientOf'])]
+#[ORM\HasLifecycleCallbacks]
 class Client implements AccessLimitedToUserEntityInterface
 {
     #[ORM\Id]
@@ -48,6 +49,10 @@ class Client implements AccessLimitedToUserEntityInterface
     #[ORM\ManyToOne(inversedBy: 'clients')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $clientOf = null;
+
+    #[ORM\Column(length: 255)]
+    #[Groups('read')]
+    private string $uniqueIdentifier = '';
 
     public function __construct()
     {
@@ -164,5 +169,16 @@ class Client implements AccessLimitedToUserEntityInterface
     public function getUser(): User
     {
         return $this->getClientOf();
+    }
+
+    public function getUniqueIdentifier(): string
+    {
+        return $this->uniqueIdentifier;
+    }
+    #[ORM\PrePersist]
+    public function generateUniqueIdentifier(): self
+    {
+        $this->uniqueIdentifier = uniqid('', true);
+        return $this;
     }
 }

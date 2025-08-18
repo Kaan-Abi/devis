@@ -5,35 +5,33 @@ namespace App\Controller;
 use App\Entity\Devis;
 use App\Form\DevisForm;
 use App\Handler\DevisHandler;
+use App\Manager\DevisManager;
 use App\Repository\DevisRepository;
 use App\Security\Voter\ResourceAccessVoter;
 use App\Service\DevisPdfManager;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 #[Route('/admin/devis')]
 final class DevisController extends AbstractController
 {
     public function __construct(
+        private readonly DevisManager $devisManager,
         private readonly DevisPdfManager $devisPdfManager,
         private readonly DevisHandler $devisHandler,
     )
     {
     }
     #[Route(name: 'app_devis_index', methods: ['GET'])]
-    public function index(Request $request, DevisRepository $devisRepository): Response
+    public function index(Request $request): Response
     {
         if ($this->getUser()){
-            $devis = $devisRepository->findBy(['author' => $this->getUser()]);
+            $devis = $this->devisManager->findBy(['author' => $this->getUser()]);
         }else {
             $devis = $request->getSession()->get('devis', new ArrayCollection());
         }
@@ -43,11 +41,6 @@ final class DevisController extends AbstractController
         ]);
     }
 
-    /**
-     * @throws SyntaxError
-     * @throws RuntimeError
-     * @throws LoaderError
-     */
     #[Route('/new', name: 'app_devis_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
@@ -69,19 +62,28 @@ final class DevisController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_devis_show', methods: ['GET'])]
-    #[IsGranted(ResourceAccessVoter::VIEW,'devi')]
-    public function show(Devis $devi): Response
-    {
-        return $this->render('devis/show.html.twig', [
-            'devi' => $devi,
-        ]);
-    }
+//    #[Route('/{id}', name: 'app_devis_show', methods: ['GET'])]
+//    #[IsGranted(ResourceAccessVoter::VIEW,'devi')]
+//    public function show(Devis $devi): Response
+//    {
+//        return $this->render('devis/show.html.twig', [
+//            'devi' => $devi,
+//        ]);
+//    }
 
-    #[Route('/{id}/edit', name: 'app_devis_edit', methods: ['GET', 'POST'])]
-    #[IsGranted(ResourceAccessVoter::EDIT,'devi')]
-    public function edit(Request $request, Devis $devi): Response
+    #[Route('/{reference}/edit', name: 'app_devis_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, string $reference): Response
     {
+        if ($this->getUser()){
+            $devi = $this->devisManager->findOneBy(['author' => $this->getUser(), 'reference' => $reference]);
+        }else {
+            $devi = $request->getSession()->get('devis', new ArrayCollection())->get($reference);
+        }
+
+        if (!$this->isGranted(ResourceAccessVoter::EDIT, $devi)){
+            $this->createAccessDeniedException();
+        }
+
         $form = $this->createForm(DevisForm::class, $devi);
         $form->handleRequest($request);
 
@@ -97,11 +99,20 @@ final class DevisController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_devis_delete', methods: ['POST'])]
-    #[IsGranted(ResourceAccessVoter::DELETE,'devi')]
-    public function delete(Request $request, Devis $devi): Response
+    #[Route('/{reference}/delete', name: 'app_devis_delete', methods: ['POST'])]
+    public function delete(Request $request, string $reference): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$devi->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->getUser()){
+            $devi = $this->devisManager->findOneBy(['author' => $this->getUser(), 'reference' => $reference]);
+        }else {
+            $devi = $request->getSession()->get('devis', new ArrayCollection())->get($reference);
+        }
+
+        if (!$this->isGranted(ResourceAccessVoter::DELETE, $devi)){
+            $this->createAccessDeniedException();
+        }
+
+        if ($this->isCsrfTokenValid('delete'.$devi->getReference(), $request->getPayload()->getString('_token'))) {
             $this->devisHandler->delete($devi);
         }
 

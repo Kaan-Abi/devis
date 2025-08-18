@@ -46,6 +46,7 @@ class DevisHandler
             /** @var ArrayCollection $devisFromSession */
             $devisFromSession = $this->session->get('devis', new ArrayCollection());
             $devisFromSession->set($devi->getReference(), $devi);
+            $this->session->set('devis', $devisFromSession);
         }
     }
 

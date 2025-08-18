@@ -4,27 +4,29 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Form\ClientForm;
-use App\Repository\ClientRepository;
+use App\Handler\ClientHandler;
+use App\Manager\ClientManager;
 use App\Security\Voter\ResourceAccessVoter;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/client')]
 final class ClientController extends AbstractController
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager)
+    public function __construct(
+        private readonly ClientHandler $clientHandler,
+        private readonly ClientManager $clientManager,
+    )
     {
     }
     #[Route(name: 'app_client_index', methods: ['GET'])]
-    public function index(Request $request,ClientRepository $clientRepository): Response
+    public function index(Request $request): Response
     {
         if ($this->getUser()){
-            $clients = $clientRepository->findBy(['clientOf' => $this->getUser()]);
+            $clients = $this->clientManager->findBy(['clientOf' => $this->getUser()]);
         }else{
             $clients = $request->getSession()->get('clients', new ArrayCollection());
         }
@@ -42,8 +44,7 @@ final class ClientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($client);
-            $this->entityManager->flush();
+            $this->clientHandler->handle($client, true);
 
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -54,24 +55,33 @@ final class ClientController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_client_show', methods: ['GET'])]
-    #[IsGranted(ResourceAccessVoter::VIEW,'client')]
-    public function show(Client $client): Response
-    {
-        return $this->render('client/show.html.twig', [
-            'client' => $client,
-        ]);
-    }
+//    #[Route('/{id}', name: 'app_client_show', methods: ['GET'])]
+//    #[IsGranted(ResourceAccessVoter::VIEW,'client')]
+//    public function show(Client $client): Response
+//    {
+//        return $this->render('client/show.html.twig', [
+//            'client' => $client,
+//        ]);
+//    }
 
-    #[Route('/{id}/edit', name: 'app_client_edit', methods: ['GET', 'POST'])]
-    #[IsGranted(ResourceAccessVoter::EDIT,'client')]
-    public function edit(Request $request, Client $client): Response
+    #[Route('/{uniqueIdentifier}/edit', name: 'app_client_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, string $uniqueIdentifier): Response
     {
+        if ($this->getUser()){
+            $client = $this->clientManager->findOneBy(['clientOf' => $this->getUser(), 'uniqueIdentifier' => $uniqueIdentifier]);
+        }else{
+            $client = $request->getSession()->get('clients', new ArrayCollection())->get($uniqueIdentifier);
+        }
+
+        if (!$this->isGranted(ResourceAccessVoter::EDIT, $client)){
+            $this->createAccessDeniedException();
+        }
+
         $form = $this->createForm(ClientForm::class, $client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
+            $this->clientHandler->handle($client);
 
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -82,13 +92,21 @@ final class ClientController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_client_delete', methods: ['POST'])]
-    #[IsGranted(ResourceAccessVoter::DELETE,'client')]
-    public function delete(Request $request, Client $client): Response
+    #[Route('/{uniqueIdentifier}/delete', name: 'app_client_delete', methods: ['POST'])]
+    public function delete(Request $request, string $uniqueIdentifier): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->getPayload()->getString('_token'))) {
-            $this->entityManager->remove($client);
-            $this->entityManager->flush();
+        if ($this->getUser()){
+            $client = $this->clientManager->findOneBy(['clientOf' => $this->getUser(), 'uniqueIdentifier' => $uniqueIdentifier]);
+        }else{
+            $client = $request->getSession()->get('clients', new ArrayCollection())->get($uniqueIdentifier);
+        }
+
+        if (!$this->isGranted(ResourceAccessVoter::DELETE, $client)){
+            $this->createAccessDeniedException();
+        }
+
+        if ($this->isCsrfTokenValid('delete'.$client->getUniqueIdentifier(), $request->getPayload()->getString('_token'))) {
+            $this->clientHandler->delete($client);
         }
 
         return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
