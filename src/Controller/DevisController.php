@@ -62,14 +62,21 @@ final class DevisController extends AbstractController
         ]);
     }
 
-//    #[Route('/{id}', name: 'app_devis_show', methods: ['GET'])]
-//    #[IsGranted(ResourceAccessVoter::VIEW,'devi')]
-//    public function show(Devis $devi): Response
-//    {
-//        return $this->render('devis/show.html.twig', [
-//            'devi' => $devi,
-//        ]);
-//    }
+    #[Route('/{reference}', name: 'app_devis_show', methods: ['GET'])]
+    public function show(Request $request, string $reference): Response
+    {
+        if ($this->getUser()){
+            $devi = $this->devisManager->findOneBy(['author' => $this->getUser(), 'reference' => $reference]);
+        }else {
+            $devi = $request->getSession()->get('devis', new ArrayCollection())->get($reference);
+        }
+        if (!$this->isGranted(ResourceAccessVoter::VIEW, $devi)){
+            $this->createAccessDeniedException();
+        }
+        return $this->render('devis/show.html.twig', [
+            'devi' => $devi,
+        ]);
+    }
 
     #[Route('/{reference}/edit', name: 'app_devis_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, string $reference): Response
@@ -119,12 +126,18 @@ final class DevisController extends AbstractController
         return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}/pdf', name: 'app_devis_download')]
-    #[IsGranted(ResourceAccessVoter::VIEW,'devis')]
-    public function downloadPdf(Devis $devis): BinaryFileResponse
+    #[Route('/{reference}/pdf', name: 'app_devis_download')]
+    public function downloadPdf(Request $request, string $reference): BinaryFileResponse
     {
-        if ( !$this->getUser() ||
-            $this->getUser()->getId() !== $devis->getAuthor()?->getId()){
+        if ($this->getUser()){
+            $devis = $this->devisManager->findOneBy(['author' => $this->getUser(), 'reference' => $reference]);
+        }else {
+            $devis = $request->getSession()->get('devis', new ArrayCollection())->get($reference);
+        }
+
+        if ( !$this->isGranted(ResourceAccessVoter::VIEW, $devis) ||
+            ( $this->getUser() && $this->getUser()->getId() !== $devis->getAuthor()?->getId())
+        ){
             $this->createAccessDeniedException();
         }
         $path = $this->devisPdfManager->getPdfPath($devis);

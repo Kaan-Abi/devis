@@ -6,7 +6,7 @@
 {% block body %}
     <div class="card shadow border-1 p-3">
         {# TODO: add collapsible thing to show devis #}
-        <a href="{{ path('app_devis_download', {id: devi.id}) }}" class="btn btn-primary btn-lg mt-4">
+        <a href="{{ path('app_devis_download', {reference: devi.reference}) }}" class="btn btn-primary btn-lg mt-4">
             {{ 'devis.show.download_devis'|trans({}, 'interface') }}
         </a>
     </div>
