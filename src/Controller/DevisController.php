@@ -52,7 +52,7 @@ final class DevisController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->devisHandler->handle($devi, $form);
+            $this->devisHandler->handle($devi, $form, true);
             return $this->redirectToRoute('app_devis_show', ['reference' => $devi->getReference()]);
         }
 

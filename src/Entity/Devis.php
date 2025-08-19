@@ -56,7 +56,6 @@ class Devis implements AccessLimitedToUserEntityInterface
         return $this->createdAt;
     }
 
-    #[ORM\PrePersist]
     public function setCreatedAt(): static
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -69,7 +68,6 @@ class Devis implements AccessLimitedToUserEntityInterface
         return $this->updatedAt;
     }
 
-    #[ORM\PreUpdate]
     public function setUpdatedAt(): static
     {
         $this->updatedAt = new \DateTimeImmutable();
@@ -108,7 +106,8 @@ class Devis implements AccessLimitedToUserEntityInterface
 
     public function generateReference(): static
     {
-        $this->reference = 'DEVIS-'.strtoupper(uniqid('', true));
+        $date = $this->createdAt ? '-'. $this->createdAt->format('Ymd') : '';
+        $this->reference = 'DEVIS' . $date . '-'. strtoupper(uniqid());
 
         return $this;
     }

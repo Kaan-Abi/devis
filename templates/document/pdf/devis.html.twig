@@ -111,7 +111,7 @@
         {% endif %}
         {% if devis.client.phone %}
 
-            <p>{{ "devis.phone"|trans({}, 'documents') }} : {{ devis.client.phone }}</p>
+            <p>{{ "devis.phone"|trans({}, 'documents') }} : {{ '+33 ' ~ devis.client.phone }}</p>
         {% endif %}
         {% if devis.client.email %}
 
@@ -138,7 +138,7 @@
         <tbody>
         {% for item in devis.content %}
             <tr>
-                <td>{{ item.description|striptags }}</td>
+                <td>{{ item.description|raw }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.htPrice }} €</td>
                 <td>{{ item.vat * 100}} %</td>
@@ -157,7 +157,7 @@
 {% if devis.additionalNote %}
     <div class="section">
         <h3>{{ "devis.note"|trans({}, 'documents') }}</h3>
-        <p>{{ devis.additionalNote|striptags }}</p>
+        <p>{{ devis.additionalNote|raw }}</p>
     </div>
 {% endif %}
 

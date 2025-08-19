@@ -1,7 +1,7 @@
 {% extends 'admin_base.html.twig' %}
 
-{% block title %}{{ "devis.show.title"|trans({'%devis_reference%': devi.reference}, 'interface') }}{% endblock %}
 {% block tab_title %}{{ "devis.show.title"|trans({'%devis_reference%': devi.reference}, 'interface') }}{% endblock %}
+{% block title %}{{ "devis.show.title_break"|trans({'%devis_reference%': devi.reference}, 'interface') | raw }}{% endblock %}
 
 {% block body %}
     <div class="card shadow border-1 p-3">

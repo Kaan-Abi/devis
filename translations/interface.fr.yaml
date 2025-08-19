@@ -111,6 +111,7 @@ devis:
         back_to_list: Retour à la liste des devis
     show:
         title: Consultation du devis %devis_reference%
+        title_break: Consultation du devis <br> %devis_reference%
         back_to_list: Retour à la liste des devis
         download_devis: Télécharger le devis
         delete_devis: Supprimer

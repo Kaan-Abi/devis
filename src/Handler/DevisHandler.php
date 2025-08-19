@@ -26,16 +26,22 @@ class DevisHandler
     {
         $this->session = $this->requestStack->getSession();
     }
-    public function handle(Devis $devi, FormInterface $form): void
+    public function handle(Devis $devi, FormInterface $form, bool $new = false): void
     {
         $client = $this->clientManager->updateClientFromDevisForm($devi,(int) $form->get('client_uniqueIdentifier')->getData());
 
         $deviLines = $form->get('content')->getData();
         $devi->setContent($deviLines);
 
-        if (!$devi->getReference()){
+        if ($new){
+            $devi->setCreatedAt();
             $devi->generateReference();
         }
+
+        if (!$new){
+            $devi->setUpdatedAt();
+        }
+
 
         $this->devisPdfManager->generate($devi);
 

@@ -13,8 +13,8 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     {% for item in this.items %}
-                        <li class="nav-item {{ item.active ? 'active' : ''}}">
-                            <a class="nav-link" href="{{ path(item.routeName, item.routeParams) }}">
+                        <li class="nav-item">
+                            <a class="nav-link {{ item.active ? 'active' : ''}}" href="{{ path(item.routeName, item.routeParams) }}">
                                 <i {% if item.icon %} class="{{ item.icon }}" {% endif %}></i>
                                 <p>{{ item.title|trans({}, 'interface') }}</p>
                             </a>

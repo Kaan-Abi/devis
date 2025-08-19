@@ -4,6 +4,7 @@ devis:
   client: Client
   phone: Téléphone
   email: Email
+  siret: Siret
   devis_details: Détails du devis
   content_table:
     description: Description

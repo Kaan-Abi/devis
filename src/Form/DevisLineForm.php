@@ -16,7 +16,8 @@ class DevisLineForm extends AbstractType
     {
         $builder
             ->add('description', RichTextType::class, [
-                'constraints' => [new NotBlank()]
+                'constraints' => [new NotBlank()],
+                'sanitize_html' => true,
             ])
             ->add('quantity', IntegerType::class, [
                 'required' => false,

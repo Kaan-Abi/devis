@@ -178,7 +178,7 @@ class Client implements AccessLimitedToUserEntityInterface
     #[ORM\PrePersist]
     public function generateUniqueIdentifier(): self
     {
-        $this->uniqueIdentifier = uniqid('', true);
+        $this->uniqueIdentifier = uniqid();
         return $this;
     }
 }
