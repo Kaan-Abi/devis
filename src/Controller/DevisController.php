@@ -44,7 +44,7 @@ final class DevisController extends AbstractController
     #[Route('/new', name: 'app_devis_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
-        $user = $this->getUser();
+        $user = $this->getUser() ?: $request->getSession()->get('user');
         $devi = new Devis();
         $devi->setAuthor($user);
         $form = $this->createForm(DevisForm::class, $devi);
@@ -53,7 +53,7 @@ final class DevisController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->devisHandler->handle($devi, $form);
-            return $this->redirectToRoute('app_devis_show', ['id' => $devi->getId()]);
+            return $this->redirectToRoute('app_devis_show', ['reference' => $devi->getReference()]);
         }
 
         return $this->render('devis/new.html.twig', [

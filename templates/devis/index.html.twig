@@ -28,7 +28,7 @@
                         <td>{{ devi.createdAt ? devi.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                         <td>{{ devi.totalTTC }} €</td>
                         <td>
-                            <a class="btn btn-warning" href="{{ path('app_devis_edit', {'id': devi.reference}) }}">
+                            <a class="btn btn-warning" href="{{ path('app_devis_edit', {'reference': devi.reference}) }}">
                                 <i class="fas fa-edit"></i>
                             </a>
                         </td>

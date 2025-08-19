@@ -20,7 +20,7 @@ class DevisForm extends AbstractType
             ->add('author', UserForm::class)
             ->add('client', ClientForm::class)
             //Used to get existent client
-            ->add('client_id', HiddenType::class, [
+            ->add('client_uniqueIdentifier', HiddenType::class, [
                 'mapped' => false
             ])
             ->add('content', CollectionType::class, [

@@ -3,13 +3,35 @@
     grid-gap: 1%;
     align-items: end;
 }
-/* 📱 Mobile : tous les éléments prennent toute la largeur */
 @media screen and (max-width: 576px) {
     .devisLine {
         grid-template-columns: 100%;
     }
 }
-@media screen and (min-width: 577px) {
+@media screen and (min-width: 578px) and (max-width: 1200px) {
+    .devisLine {
+        display: grid;
+        grid-template-columns: 100%;
+    }
+
+    .devisLine > :nth-child(1) {
+        grid-column: 1 / -1; /* Prend toute la largeur */
+    }
+
+    .devisLine > :nth-child(2),
+    .devisLine > :nth-child(3),
+    .devisLine > :nth-child(4),
+    .devisLine > :nth-child(5),
+    .devisLine > :nth-child(6) {
+        grid-column: auto;
+    }
+
+    .devisLine {
+        grid-template-columns: 22% 22% 22% 22% 12%;
+    }
+}
+
+@media screen and (min-width: 1201px) {
     .devisLine {
         grid-template-columns: 50% 10% 10% 10% 10% 5%;
     }

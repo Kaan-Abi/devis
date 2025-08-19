@@ -28,10 +28,11 @@ class DevisHandler
     }
     public function handle(Devis $devi, FormInterface $form): void
     {
-        $this->clientManager->updateClientFromDevisForm($devi,(int) $form->get('client_id')->getData());
+        $client = $this->clientManager->updateClientFromDevisForm($devi,(int) $form->get('client_uniqueIdentifier')->getData());
 
         $deviLines = $form->get('content')->getData();
         $devi->setContent($deviLines);
+
         if (!$devi->getReference()){
             $devi->generateReference();
         }
@@ -47,6 +48,13 @@ class DevisHandler
             $devisFromSession = $this->session->get('devis', new ArrayCollection());
             $devisFromSession->set($devi->getReference(), $devi);
             $this->session->set('devis', $devisFromSession);
+
+            // Update the client list in session also
+            if ($client){
+                $clientsFromSession = $this->session->get('clients', new ArrayCollection());
+                $clientsFromSession->set($client->getName(), $client);
+                $this->session->set('clients', $clientsFromSession);
+            }
         }
     }
 

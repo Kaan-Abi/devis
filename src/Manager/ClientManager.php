@@ -29,6 +29,7 @@ class ClientManager extends AbstractManager
 
     public function updateClientFromDevisForm(Devis $devis, ?int $clientId): ?Client
     {
+        // If client exists, his values are updated
         if($clientId){
             $client = $this->find($clientId);
             if ($client){
@@ -37,6 +38,7 @@ class ClientManager extends AbstractManager
                 $devis->setClient($client);
             }
         }else {
+            // If client didnt exist before we juste assign him to the current user
             $client = $devis->getClient();
             $client?->setClientOf($this->security->getUser());
         }

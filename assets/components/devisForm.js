@@ -46,10 +46,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         valueField: 'value',
         labelField: 'text',
         searchField: 'text',
-        create: true, // ✅ Permet la création d'un nouveau client
+        create: true,
         render: {
             no_results: function() {
-                return ''; // ❌ pas de texte, pas d'affichage
+                return '';
             }
         },
         load: function(query, callback) {
@@ -66,9 +66,9 @@ document.addEventListener('DOMContentLoaded', async function () {
                 document.querySelector('#devis_form_client_address').value = client.address;
                 document.querySelector('#devis_form_client_email').value = client.email;
                 document.querySelector('#devis_form_client_phone').value = client.phone;
-                document.querySelector('#devis_form_client_id').value = client.id;
+                document.querySelector('#devis_form_client_uniqueIdentifier').value = client.uniqueIdentifier;
             }else {
-                document.querySelector('#devis_form_client_id').value = null;
+                document.querySelector('#devis_form_client_uniqueIdentifier').value = null;
             }
         }
     });
