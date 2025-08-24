@@ -19,9 +19,9 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.O2SWITCH_HOST }}
-          username: ${{ secrets.O2SWITCH_USER }}
-          key: ${{ secrets.O2SWITCH_SSH_KEY }} # clé privée configurée dans GitHub
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }} # clé privée configurée dans GitHub
           script: |
             cd "${{ secrets.DEPLOY_PATH }}"
             git pull
