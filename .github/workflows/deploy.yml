@@ -1,0 +1,32 @@
+name: Deploy to o2switch
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: 
+      - main
+      - release/*
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.O2SWITCH_HOST }}
+          username: ${{ secrets.O2SWITCH_USER }}
+          key: ${{ secrets.O2SWITCH_SSH_KEY }} # clé privée configurée dans GitHub
+          script: |
+            cd "${{ secrets.DEPLOY_PATH }}"
+            git pull
+            composer install --no-dev --optimize-autoloader
+            npm i 
+            npm run build
+            php bin/console cache:clear --env=prod
+            php bin/console cache:warmup --env=prod
