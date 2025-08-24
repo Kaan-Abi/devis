@@ -6,7 +6,6 @@ use App\Entity\Devis;
 use App\Form\DevisForm;
 use App\Handler\DevisHandler;
 use App\Manager\DevisManager;
-use App\Repository\DevisRepository;
 use App\Security\Voter\ResourceAccessVoter;
 use App\Service\DevisPdfManager;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,7 +14,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/devis')]
 final class DevisController extends AbstractController
