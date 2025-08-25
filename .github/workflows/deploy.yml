@@ -12,6 +12,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: o2switch
 
     steps:
       - name: Checkout repo
