@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin/devis')]
 final class DevisController extends AbstractController
@@ -22,6 +23,7 @@ final class DevisController extends AbstractController
         private readonly DevisManager $devisManager,
         private readonly DevisPdfManager $devisPdfManager,
         private readonly DevisHandler $devisHandler,
+        private readonly TranslatorInterface $translator,
     )
     {
     }
@@ -31,6 +33,8 @@ final class DevisController extends AbstractController
         if ($this->getUser()){
             $devis = $this->devisManager->findBy(['author' => $this->getUser()]);
         }else {
+            $message = $this->translator->trans('guests_warning', ['%login_url%' => $this->generateUrl('app_login')]);
+            $this->addFlash('warning', $message);
             $devis = $request->getSession()->get('devis', new ArrayCollection());
         }
 

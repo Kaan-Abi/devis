@@ -1,2 +1,6 @@
 email_verified: Email vérifié !
 user_infos_saved_successfully: Informations enregistrées
+guests_warning: |
+  Attention, vous êtes connecté en tant qu'invité. <br>
+  Les données que vous enregistrez seront perdues si vous fermez votre navigateur. <br>
+  Pour conserver vos données, <a href="%login_url%">Identifiez-vous</a>.
