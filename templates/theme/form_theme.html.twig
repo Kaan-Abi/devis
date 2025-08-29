@@ -7,6 +7,10 @@
     {%- else -%}
         {{- label|trans(label_translation_parameters, 'form_labels')|raw -}}
     {%- endif -%}
+
+    {% if required %}
+        <span class="text-danger">*</span>
+    {% endif %}
 {%- endblock form_label_content -%}
 
 {% block _devis_form_content_price_row %}
